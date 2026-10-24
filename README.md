@@ -2,12 +2,12 @@
 
 An AI gateway that picks the best model for each prompt. INFO 490 team project.
 
-| App | Owner | What it does |
-|---|---|---|
-| `accounts` | Hriday | Sign-up/login, API keys, Playground, request history, `/api/chat`, shared `base.html` |
-| `providers` | Omkar | Provider/model registry, load balancing, failover, health checks |
-| `router` | Srinath | Prompt analysis, model scoring, feedback learning |
-| `analytics` | Manoj | Redis cache, rate limits, usage dashboard, load tests |
+| App | What it does |
+|---|---|
+| `accounts` | Sign-up/login, API keys, Playground, request history, `/api/chat`, shared `base.html` |
+| `providers` | Provider/model registry, load balancing, failover, health checks |
+| `router` | Prompt analysis, model scoring, feedback learning |
+| `analytics` | Redis cache, rate limits, usage dashboard, load tests |
 
 ## Run it
 
@@ -36,13 +36,13 @@ python manage.py runserver
 
 **Request flow:** `Playground page or POST /api/chat` → `accounts.services.run_prompt()` → router function → provider → saved as a `RequestLog` row.
 
-- **Router (Srinath):** write a function `route(prompt, priority)` that returns
+- **Router:** write a function `route(prompt, priority)` that returns
   `{"response", "provider", "model", "input_tokens", "output_tokens", "reason", "cached"}`
   (`reason` and `cached` are optional) and raises `accounts.services.ProviderError` on failure.
   Then set `MODELMESH_ROUTER = "router.services.route"` in `modelmesh/settings.py`.
-- **Providers (Omkar):** the router calls your load balancer/failover code to actually reach a model.
+- **Providers:** the router calls your load balancer/failover code to actually reach a model.
   `accounts.services.anthropic_completion()` is an example provider call you can move into your app.
-- **Analytics (Manoj):** read from `accounts.models.RequestLog` (user, model_used, status, tokens,
+- **Analytics:** read from `accounts.models.RequestLog` (user, model_used, status, tokens,
   cost_usd, latency_ms, created_at). Cache hits can return `"cached": True` from the router, and they
   are logged with status `cached`.
 - **Everyone:** extend `base.html` (`{% extends "base.html" %}`, fill `{% block content %}`), add your
