@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}API Keys{% endblock %}
+{% block content %}
+<h1>API Keys</h1>
+<p class="muted">Use a key to call ModelMesh from your own code. Keep it secret.</p>
+
+{% if new_raw_key %}
+  <div class="card highlight">
+    <strong>Your new key — copy it now. You won't see it again.</strong>
+    <div class="copy-row">
+      <code id="new-key">{{ new_raw_key }}</code>
+      <button type="button" class="button small" data-copy="new-key">Copy</button>
+    </div>
+  </div>
+{% endif %}
+
+<section class="card">
+  <h2>Create a key</h2>
+  <form method="post" class="inline-form">
+    {% csrf_token %}
+    {% include "form_fields.html" with form=form %}
+    <button type="submit" class="button">Create key</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Your keys</h2>
+  {% if api_keys %}
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Key</th><th>Created</th><th>Last used</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      {% for key in api_keys %}
+        <tr>
+          <td>{{ key.name }}</td>
+          <td><code>{{ key.prefix }}…</code></td>
+          <td>{{ key.created_at|date:"M j, Y" }}</td>
+          <td>{{ key.last_used_at|date:"M j, Y H:i"|default:"Never" }}</td>
+          <td>{% if key.revoked %}<span class="badge error">Revoked</span>{% else %}<span class="badge success">Active</span>{% endif %}</td>
+          <td>
+            {% if not key.revoked %}
+              <form method="post" action="{% url 'accounts:revoke_key' key.pk %}"
+                    onsubmit="return confirm('Revoke this key? Programs using it will stop working.');">
+                {% csrf_token %}
+                <button type="submit" class="button small danger">Revoke</button>
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% else %}
+    <p class="muted">No keys yet.</p>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Example request</h2>
+<pre><code>curl -X POST {{ request.scheme }}://{{ request.get_host }}{% url 'accounts:api_chat' %} \
+  -H "Authorization: Bearer mm_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Explain recursion in one sentence", "priority": "cheapest"}'</code></pre>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      navigator.clipboard.writeText(document.getElementById(btn.dataset.copy).textContent);
+      btn.textContent = "Copied";
+    });
+  });
+</script>
+{% endblock %}

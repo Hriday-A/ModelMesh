@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<h1>Request history</h1>
+
+<form method="get" class="card filters">
+  {% include "form_fields.html" with form=filter_form %}
+  <div class="filter-actions">
+    <button type="submit" class="button">Filter</button>
+    <a href="{% url 'accounts:history' %}" class="button secondary">Clear</a>
+  </div>
+</form>
+
+<section class="card">
+  {% if logs %}
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>When</th><th>Prompt</th><th>Model</th><th>Source</th><th>Status</th><th>Latency</th><th>Cost</th></tr></thead>
+      <tbody>
+      {% for log in logs %}
+        <tr>
+          <td>{{ log.created_at|date:"M j, H:i" }}</td>
+          <td><a href="{% url 'accounts:request_detail' log.pk %}">{{ log.prompt|truncatechars:70 }}</a></td>
+          <td>{{ log.model_used|default:"—" }}</td>
+          <td>{{ log.get_source_display }}</td>
+          <td><span class="badge {{ log.status }}">{{ log.get_status_display }}</span></td>
+          <td>{{ log.latency_ms }} ms</td>
+          <td>${{ log.cost_usd|floatformat:6 }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% if is_paginated %}
+      <nav class="pagination">
+        {% if page_obj.has_previous %}<a href="?{{ filter_query }}&page={{ page_obj.previous_page_number }}">← Previous</a>{% endif %}
+        <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a href="?{{ filter_query }}&page={{ page_obj.next_page_number }}">Next →</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="muted">No requests match. Try the <a href="{% url 'accounts:playground' %}">Playground</a>.</p>
+  {% endif %}
+</section>
+{% endblock %}

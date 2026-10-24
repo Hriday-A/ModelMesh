@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Playground{% endblock %}
+{% block content %}
+<h1>Playground</h1>
+<div class="grid playground">
+  <section class="card">
+    <form method="post" id="playground-form">
+      {% csrf_token %}
+      {% include "form_fields.html" with form=form %}
+      <button type="submit" class="button" id="send-button">Send</button>
+    </form>
+
+    {% if result %}
+      <div class="result {% if result.status == 'error' %}result-error{% endif %}">
+        {% if result.status == 'error' %}
+          <h2>Request failed</h2>
+          <p>{{ result.error_message }}</p>
+        {% else %}
+          <h2>Response</h2>
+          <div class="response-text">{{ result.response|linebreaks }}</div>
+        {% endif %}
+        <dl class="meta">
+          <div><dt>Model</dt><dd>{{ result.model_used|default:"—" }}</dd></div>
+          <div><dt>Latency</dt><dd>{{ result.latency_ms }} ms</dd></div>
+          <div><dt>Tokens</dt><dd>{{ result.total_tokens }}</dd></div>
+          <div><dt>Cost</dt><dd>${{ result.cost_usd|floatformat:6 }}</dd></div>
+        </dl>
+        {% if result.routing_reason %}<p class="muted"><strong>Why this model?</strong> {{ result.routing_reason }}</p>{% endif %}
+      </div>
+    {% endif %}
+  </section>
+
+  <aside class="card">
+    <h2>Recent requests</h2>
+    {% for log in recent_logs %}
+      <a class="recent" href="{% url 'accounts:request_detail' log.pk %}">
+        <span class="badge {{ log.status }}">{{ log.get_status_display }}</span>
+        <span class="recent-prompt">{{ log.prompt|truncatechars:60 }}</span>
+        <small class="muted">{{ log.model_used|default:"—" }} · {{ log.created_at|timesince }} ago</small>
+      </a>
+    {% empty %}
+      <p class="muted">Your requests will show up here.</p>
+    {% endfor %}
+    <p><a href="{% url 'accounts:history' %}">See all history →</a></p>
+  </aside>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+  // Stops double submits while the model is answering.
+  document.getElementById("playground-form").addEventListener("submit", function () {
+    var btn = document.getElementById("send-button");
+    btn.disabled = true;
+    btn.textContent = "Thinking…";
+  });
+</script>
+{% endblock %}

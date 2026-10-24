@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Request #{{ log.pk }}{% endblock %}
+{% block content %}
+<p><a href="{% url 'accounts:history' %}">← Back to history</a></p>
+<h1>Request #{{ log.pk }} <span class="badge {{ log.status }}">{{ log.get_status_display }}</span></h1>
+
+<section class="card">
+  <dl class="meta">
+    <div><dt>When</dt><dd>{{ log.created_at|date:"M j, Y H:i:s" }}</dd></div>
+    <div><dt>Source</dt><dd>{{ log.get_source_display }}{% if log.api_key %} ({{ log.api_key.name }}){% endif %}</dd></div>
+    <div><dt>Priority</dt><dd>{{ log.get_priority_display }}</dd></div>
+    <div><dt>Provider</dt><dd>{{ log.provider|default:"—" }}</dd></div>
+    <div><dt>Model</dt><dd>{{ log.model_used|default:"—" }}</dd></div>
+    <div><dt>Latency</dt><dd>{{ log.latency_ms }} ms</dd></div>
+    <div><dt>Tokens in / out</dt><dd>{{ log.input_tokens }} / {{ log.output_tokens }}</dd></div>
+    <div><dt>Cost</dt><dd>${{ log.cost_usd|floatformat:6 }}</dd></div>
+  </dl>
+  {% if log.routing_reason %}<p><strong>Why this model?</strong> {{ log.routing_reason }}</p>{% endif %}
+</section>
+
+<section class="card">
+  <h2>Prompt</h2>
+  <div class="response-text">{{ log.prompt|linebreaks }}</div>
+</section>
+
+<section class="card">
+  {% if log.status == "error" %}
+    <h2>Error</h2>
+    <p>{{ log.error_message }}</p>
+  {% else %}
+    <h2>Response</h2>
+    <div class="response-text">{{ log.response|linebreaks }}</div>
+  {% endif %}
+</section>
+{% endblock %}

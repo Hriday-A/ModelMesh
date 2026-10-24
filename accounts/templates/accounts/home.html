@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>One API. The right AI model for every request.</h1>
+  <p>ModelMesh looks at each prompt, picks the model that balances cost, speed and quality,
+     and switches providers automatically if one goes down.</p>
+  {% if user.is_authenticated %}
+    <a class="button" href="{% url 'accounts:playground' %}">Open the Playground</a>
+  {% else %}
+    <a class="button" href="{% url 'accounts:signup' %}">Get started</a>
+    <a class="button secondary" href="{% url 'login' %}">Log in</a>
+  {% endif %}
+</section>
+<section class="grid three">
+  <div class="card"><h3>Smart routing</h3><p>Simple prompts go to fast, cheap models; hard ones go to stronger models.</p></div>
+  <div class="card"><h3>Failover</h3><p>If a provider fails, requests move to another one without breaking your app.</p></div>
+  <div class="card"><h3>Usage tracking</h3><p>Every request records the model used, its cost and its latency.</p></div>
+</section>
+{% endblock %}
