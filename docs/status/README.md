@@ -15,7 +15,7 @@ ModelMesh is a Django 5.1 web app: an AI gateway that picks a model for each pro
 | `accounts` | Hriday Agarwal | 1–8 | Built in Part 1. P2-A3 integration and README work not started. | [hriday-accounts.md](hriday-accounts.md) |
 | `providers` | Omkar Chougule | 9–10 | Not started | [omkar-providers.md](omkar-providers.md) |
 | `router` | Srinath Venkatesh | 11–12 | Not started | [srinath-router.md](srinath-router.md) |
-| `analytics` | Manojkumar Mohankumar | 13–14 | First version built on `feature/analytics`. Not merged yet. | [manoj-analytics.md](manoj-analytics.md) |
+| `analytics` | Manojkumar Mohankumar | 13–14 | First version merged into `main` (PR #1). | [manoj-analytics.md](manoj-analytics.md) |
 
 ## How the apps connect
 

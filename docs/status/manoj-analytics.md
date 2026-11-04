@@ -1,6 +1,6 @@
 # analytics: Manojkumar Mohankumar
 
-- **Status:** first version built on `feature/analytics`. Its 9 tests pass, along with the 18 accounts tests. Not committed or pushed yet.
+- **Status:** first version merged into `main` through PR #1 on 2026-11-03. Its 9 tests pass, along with the 18 accounts tests.
 - **Branch:** `feature/analytics`
 - **Wireframe screens:** 13 (Usage Dashboard), 14 (Quotas & Cache Settings)
 - **Last updated:** 2026-11-03
@@ -55,7 +55,7 @@
 - [x] Wired into settings, URLs and the nav bar
 - [x] `docs/product_scope.md` drafted
 - [ ] Confirm the "Changes since P2-A2" section after the team's router decision
-- [ ] Commit, push `feature/analytics` and open a pull request to `main`
+- [x] Committed, pushed and merged into `main` (PR #1)
 
 ## Submission piece: updated product scope (Requirement 1, 15 pts)
 
