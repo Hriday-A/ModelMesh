@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Quotas & cache{% endblock %}
+{% block content %}
+<p><a href="{% url 'analytics:dashboard' %}">← Back to usage</a></p>
+<h1>Quotas &amp; cache settings</h1>
+
+<div class="grid two">
+  <section class="card">
+    <h2>Settings</h2>
+    <form method="post">
+      {% csrf_token %}
+      {% include "form_fields.html" with form=form %}
+      <button type="submit" class="button">Save settings</button>
+    </form>
+    <p class="muted">Your settings are saved now. Limits and caching start working in the next version.</p>
+  </section>
+
+  <section class="card">
+    <h2>This month</h2>
+    <p>Spent <strong>${{ month.spend|floatformat:2 }} of ${{ month.budget|floatformat:2 }}</strong> ({{ month.used_pct }}% of the budget)</p>
+    <progress max="100" value="{{ month.used_pct }}" aria-label="Monthly budget used">{{ month.used_pct }}%</progress>
+    <dl class="meta">
+      <div><dt>Cache hits</dt><dd>{{ month.hits }}</dd></div>
+      <div><dt>Misses</dt><dd>{{ month.misses }}</dd></div>
+      <div><dt>Saved (estimate)</dt><dd>${{ month.saved|floatformat:4 }}</dd></div>
+    </dl>
+  </section>
+</div>
+{% endblock %}

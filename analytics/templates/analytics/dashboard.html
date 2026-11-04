@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Usage{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Usage</h1>
+  <form method="get" class="inline-form">
+    {% include "form_fields.html" with form=range_form %}
+    <button type="submit" class="button secondary">Show</button>
+  </form>
+</div>
+
+<section class="grid four" aria-label="Totals">
+  <div class="card stat"><span class="stat-label">Requests</span><span class="stat-value">{{ summary.requests }}</span></div>
+  <div class="card stat"><span class="stat-label">Total cost</span><span class="stat-value">${{ summary.cost|floatformat:4 }}</span></div>
+  <div class="card stat"><span class="stat-label">Avg latency</span><span class="stat-value">{{ summary.avg_latency_ms }} ms</span></div>
+  <div class="card stat"><span class="stat-label">Cache hit rate</span><span class="stat-value">{{ summary.cache_hit_rate }}%</span></div>
+</section>
+
+<div class="grid two">
+  <section class="card">
+    <h2>Requests per day</h2>
+    <ul class="day-bars" aria-label="Requests per day">
+      {% for day in summary.per_day %}
+        <li style="height: {{ day.height }}%" title="{{ day.day|date:'M j' }}: {{ day.requests }}"><span class="visually-hidden">{{ day.day|date:"M j" }}: {{ day.requests }} request{{ day.requests|pluralize }}</span></li>
+      {% endfor %}
+    </ul>
+    <p class="axis muted"><span>{{ summary.first_day|date:"M j" }}</span><span>{{ summary.last_day|date:"M j" }}</span></p>
+  </section>
+
+  <section class="card">
+    <h2>Cost by model</h2>
+    {% for row in summary.per_model %}
+      <div class="model-row">
+        <span>{{ row.model_used }}</span>
+        <span class="muted">${{ row.cost|floatformat:4 }} · {{ row.requests }} request{{ row.requests|pluralize }}</span>
+        <div class="model-track" aria-hidden="true"><div class="model-bar" style="width: {{ row.width }}%"></div></div>
+      </div>
+    {% empty %}
+      <p class="muted">No answered requests in this range yet. Send one from the <a href="{% url 'accounts:playground' %}">Playground</a>.</p>
+    {% endfor %}
+  </section>
+</div>
+
+<div class="actions-row">
+  <a href="{% url 'analytics:export_csv' %}?days={{ days }}">Download CSV</a>
+  <a class="button secondary" href="{% url 'analytics:limits' %}">Quotas &amp; cache settings →</a>
+</div>
+{% endblock %}

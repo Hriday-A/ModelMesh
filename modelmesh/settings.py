@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts",
+    "analytics",
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,7 @@ MODELMESH_NAV = [
     ("Playground", "accounts:playground"),
     ("History", "accounts:history"),
     ("API Keys", "accounts:api_keys"),
+    ("Usage", "analytics:dashboard"),
 ]
 
 # Dotted path to the function that picks a model and returns a completion.
