@@ -6,5 +6,6 @@ urlpatterns = [
     # login/, logout/, password_change/ ... from Django's built-in auth views
     path("", include("django.contrib.auth.urls")),
     path("", include("accounts.urls")),
+    path("usage/", include("analytics.urls")),
     # Teammates add their apps here, e.g. path("providers/", include("providers.urls")),
 ]

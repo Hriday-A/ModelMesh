@@ -95,3 +95,22 @@ td form { margin: 0; }
 .copy-row code { background: #fff; padding: .4rem .6rem; border-radius: var(--radius); border: 1px solid var(--border); overflow-wrap: anywhere; }
 .pagination { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
 .muted { color: var(--muted); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.field input[type="checkbox"] { width: auto; align-self: flex-start; }
+
+/* Analytics: usage dashboard and quotas & cache */
+.page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.page-head h1 { margin: 0; }
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+.grid.four { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.stat { display: flex; flex-direction: column; gap: .25rem; }
+.stat-label { font-size: .85rem; color: var(--muted); }
+.stat-value { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.day-bars { list-style: none; margin: 0; padding: 0; height: 140px; display: flex; align-items: flex-end; gap: 2px; border-bottom: 1px solid var(--border); }
+.day-bars li { flex: 1; min-height: 1px; background: var(--accent); border-radius: 2px 2px 0 0; }
+.axis { display: flex; justify-content: space-between; font-size: .8rem; margin: .4rem 0 0; }
+.model-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem .75rem; margin-bottom: .75rem; }
+.model-track { flex-basis: 100%; }
+.model-bar { height: 10px; min-width: 2px; background: var(--accent); border-radius: 4px; }
+.actions-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+progress { width: 100%; height: 12px; accent-color: var(--accent); }
