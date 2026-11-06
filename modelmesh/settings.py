@@ -17,6 +17,23 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _load_dotenv(path):
+    """Read KEY=value lines from a .env file into the environment (real env vars win)."""
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
+
+_load_dotenv(BASE_DIR / ".env")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -40,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "analytics",
+    "router",
 ]
 
 MIDDLEWARE = [
@@ -141,13 +159,14 @@ MODELMESH_NAV = [
     ("Playground", "accounts:playground"),
     ("History", "accounts:history"),
     ("API Keys", "accounts:api_keys"),
+    ("Routing", "router:rules"),
     ("Usage", "analytics:dashboard"),
 ]
 
 # Dotted path to the function that picks a model and returns a completion.
 # The Router app (Part 3) replaces this with its own function; it must accept
 # (prompt, priority) and return the same dict as accounts.services.default_router.
-MODELMESH_ROUTER = os.environ.get("MODELMESH_ROUTER", "accounts.services.default_router")
+MODELMESH_ROUTER = os.environ.get("MODELMESH_ROUTER", "router.services.route")
 
 # "mock" works offline with no API key. Set to "anthropic" to call a real model.
 MODELMESH_PROVIDER = os.environ.get("MODELMESH_PROVIDER", "mock")
@@ -155,3 +174,15 @@ MODELMESH_DEFAULT_MODEL = os.environ.get("MODELMESH_DEFAULT_MODEL", "")
 # USD per 1M tokens for the default model, used to estimate cost per request.
 MODELMESH_INPUT_PRICE = os.environ.get("MODELMESH_INPUT_PRICE", "0")
 MODELMESH_OUTPUT_PRICE = os.environ.get("MODELMESH_OUTPUT_PRICE", "0")
+
+# Smart router (router app). See docs/ai_plan.md.
+ROUTER_ARTIFACT_PATH = os.environ.get("ROUTER_ARTIFACT_PATH", str(BASE_DIR / "router" / "artifacts" / "router.joblib"))
+ROUTER_EMBEDDER = os.environ.get("ROUTER_EMBEDDER", "sentence-transformers/all-MiniLM-L6-v2")
+ROUTER_CLASSIFIER_MAX_CHARS = 2000  # the classifier reads this much; the LLM always gets the full prompt
+ROUTER_MAX_TOKENS = int(os.environ.get("ROUTER_MAX_TOKENS", "12000"))  # includes thinking tokens
+# Lumen (UIUC/NCSA) serves the models the router chooses between, through an OpenAI-compatible API.
+LUMEN_BASE_URL = os.environ.get("LUMEN_BASE_URL", "https://lumen.ncsa.illinois.edu/v1")
+LUMEN_API_KEY = os.environ.get("LUMEN_API_KEY", "")
+ROUTER_REASONING_EFFORT = os.environ.get("ROUTER_REASONING_EFFORT", "high")
+ROUTER_TIMEOUT_SECONDS = float(os.environ.get("ROUTER_TIMEOUT_SECONDS", "120"))
+ROUTER_BENCHMARK_DIR = BASE_DIR / "router" / "benchmark"

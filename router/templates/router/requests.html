@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My routed requests{% endblock %}
+{% block content %}
+<p><a href="{% url 'router:rules' %}">← Back to routing</a></p>
+<h1>My routed requests</h1>
+<section class="card">
+  {% if logs %}
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">When</th><th scope="col">Prompt</th><th scope="col">Model</th><th scope="col">Category</th><th scope="col">Status</th><th scope="col">Rating</th><th scope="col"><span class="visually-hidden">Explain</span></th></tr></thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td>{{ log.created_at|date:"M j, H:i" }}</td>
+              <td>{{ log.prompt|truncatechars:60 }}</td>
+              <td>{{ log.routing_decision.chosen_model|default:"—" }}</td>
+              <td>{{ log.routing_decision.get_category_display }}</td>
+              <td><span class="badge {{ log.status }}">{{ log.get_status_display }}</span></td>
+              <td>{% if log.feedback %}{{ log.feedback.stars }} ★{% else %}<span class="muted">—</span>{% endif %}</td>
+              <td><a href="{% url 'router:explain' log.pk %}">Explain &amp; rate</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if is_paginated %}
+      <nav class="pagination" aria-label="Pages">
+        {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">← Previous</a>{% endif %}
+        <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Next →</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p>No routed requests yet. <a href="{% url 'accounts:playground' %}">Send a prompt in the Playground</a>.</p>
+  {% endif %}
+</section>
+{% endblock %}

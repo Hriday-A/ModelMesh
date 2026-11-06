@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Edit rule{% else %}New rule{% endif %}{% endblock %}
+{% block content %}
+<section class="card narrow wide">
+  <h1>{% if object %}Edit rule{% else %}New rule{% endif %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% include "form_fields.html" with form=form %}
+    <div class="filter-actions">
+      <button type="submit" class="button">Save</button>
+      <a class="button secondary" href="{% url 'router:rules' %}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

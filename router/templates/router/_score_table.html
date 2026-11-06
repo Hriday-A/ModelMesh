@@ -1,0 +1,26 @@
+{# Score table. Usage: {% include "router/_score_table.html" with rows=rows %} #}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Model</th>
+        <th scope="col">Chance of a good answer</th>
+        <th scope="col">Price <span class="muted">(vs. priciest)</span></th>
+        <th scope="col">Slowness <span class="muted">(vs. slowest)</span></th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr{% if row.chosen %} class="chosen-row"{% endif %}>
+          <td>{% if row.chosen %}<strong>{{ row.name }} ✓</strong>{% else %}{{ row.name }}{% endif %}</td>
+          <td>{% if row.p_good_pct is None %}<span class="muted">n/a</span>{% else %}{{ row.p_good_pct }}%{% endif %}</td>
+          <td>{{ row.price|floatformat:2 }}</td>
+          <td>{% if row.slowness %}{{ row.slowness|floatformat:2 }}{% else %}<span class="muted">not measured</span>{% endif %}</td>
+          <td>{{ row.total|floatformat:3 }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="muted small-print">Score = chance of a good answer × quality weight − price × cost weight − slowness × speed weight.</p>

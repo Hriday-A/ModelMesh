@@ -114,3 +114,15 @@ td form { margin: 0; }
 .model-bar { height: 10px; min-width: 2px; background: var(--accent); border-radius: 4px; }
 .actions-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
 progress { width: 100%; height: 12px; accent-color: var(--accent); }
+
+/* Router: routing rules, explanation & feedback */
+.head-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.card.wide { max-width: 560px; }
+tr.chosen-row td { background: #eefaf3; }
+.small-print { font-size: .8rem; margin: .5rem 0 0; }
+.range-value { font-variant-numeric: tabular-nums; font-weight: 600; }
+.field input[type="radio"] { width: auto; }
+.feedback-form .field > div { display: flex; gap: .25rem 1rem; flex-wrap: wrap; }
+.feedback-form .field > div label { font-weight: 400; display: flex; gap: .35rem; align-items: center; }
+details { margin-top: 1rem; }
+summary { cursor: pointer; color: var(--accent); }

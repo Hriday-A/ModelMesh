@@ -1,35 +1,39 @@
 # router: Srinath Venkatesh
 
-- **Status:** not started
+- **Status:** built, waiting on benchmark data to train
 - **Branch:** `feature/router`
 - **Wireframe screens:** 11 (Routing Rules), 12 (Routing Explanation & Feedback)
-- **Last updated:** 2026-11-03
+- **Last updated:** 2026-11-05
 
-## P2-A3 tasks (due 2026-11-09)
+## Done
 
-- [ ] `python manage.py startapp router`
-- [ ] Models:
-  - `RoutingRule`: task category, keywords, preferred model and fallback model. Both models link to `providers.AIModel`.
-  - `Feedback`: linked to an `accounts.RequestLog`, with 1–5 stars and an optional comment.
-- [ ] `route(prompt, priority)` in `router/services.py`. It classifies the prompt, scores the enabled models for the priority, calls the chosen model, and returns the router contract dictionary (see `README.md` in this folder).
-- [ ] Set `MODELMESH_ROUTER = "router.services.route"`.
-- [ ] Routing rules list and New rule form (Screen 11).
-- [ ] Add the app to `INSTALLED_APPS`, add a "Routing" link to `MODELMESH_NAV`, and add its URLs to `modelmesh/urls.py`.
+- [x] `router` app: `RouterModel` (3 Lumen models (small/medium/large by parameters) with coin prices), `RoutingRule`, `RoutingSettings`,
+  `RoutingDecision` (OneToOne `RequestLog`), `Feedback` (OneToOne `RequestLog`)
+- [x] `router.services.route(prompt, priority)` set as `MODELMESH_ROUTER`: embedding + one logistic
+  regression per model → P(good answer) → cost/speed/quality score → confidence bar → admin rules →
+  calls one model, fails over to the next
+- [x] Keyword fallback when no trained classifier exists
+- [x] Real per-model cost written to `RequestLog.cost_usd` (Usage dashboard is now per-model correct)
+- [x] Screen 11 `/routing/`: rules list, new/edit/delete (staff), weight sliders, dry-run test prompt
+- [x] Screen 12 `/routing/explain/<id>/`: score table, money saved, star feedback; `/routing/requests/`
+- [x] `POST /routing/api/preview`
+- [x] Benchmark pipeline: `run_benchmark`, `export_for_judging`, `import_judgments`, `train_router`,
+  `evaluate_router` (see `router/benchmark/README.md`)
+- [x] `docs/ai_plan.md`; 24 router tests
 
-## Submission piece: initial AI implementation (Requirement 3, 20 pts)
+## To do before 2026-11-09
 
-- [ ] `docs/ai_plan.md`, covering:
-  - The AI technique and model, and why they fit on cost, speed and accuracy.
-  - Input and output: a prompt and priority go in; a task category, a chosen model and a one-line reason come out.
-  - How it connects to Django: it reads `AIModel`, `RoutingRule` and `Feedback`, and writes the reason to `RequestLog`.
-  - Evidence: run the classifier on about 20 sample prompts it was not trained on, and record expected vs. predicted category and the time per prompt.
+- [ ] Create a Lumen API key, acknowledge the 3 models, put the key in `.env`
+- [ ] Run a 3-call test to confirm Lumen accepts `reasoning_effort=medium` for each model
+- [ ] Write ~200 prompts in `router/benchmark/prompts.csv`
+- [ ] Run the benchmark, judge in ChatGPT, import, train, evaluate
+- [ ] Fill section 6 of `docs/ai_plan.md` from `docs/eval/router_eval.md`
+- [ ] Open the PR
 
 ## Depends on / used by
 
-- **Depends on:**
-  - `providers.AIModel`, due 2026-11-04
-  - `accounts.RequestLog`
-- **Used by:** `accounts.services.run_prompt()`, through `MODELMESH_ROUTER`.
-- **Open decisions:**
-  - How the router uses AI. The recommendation is a scikit-learn TF-IDF and logistic regression classifier, with keyword rules as the fallback.
-  - The `AIModel` field names, to agree with Omkar.
+- **Depends on:** `accounts.RequestLog` and `accounts.services.run_prompt` / `ProviderError` (on main).
+  No dependency on the providers app; a link to `providers.AIModel` can be added after it merges.
+- **Used by:** `run_prompt()` through `MODELMESH_ROUTER`.
+- **Changes to shared files:** `settings.py` (app, router setting, nav, `ROUTER_*`), `modelmesh/urls.py`,
+  `requirements.txt`, `.gitignore`, `static/css/main.css` (new section at the end), README.

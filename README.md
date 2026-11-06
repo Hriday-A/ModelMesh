@@ -21,16 +21,35 @@ python manage.py runserver
 
 Open http://localhost:8000 and sign up. Run tests with `python manage.py test`.
 
-By default answers come from a **mock provider** (no API key needed). To get real answers from a model:
+Prompts go through the **smart router** (`router` app), which picks a small, medium or
+large open-weight model (Ornith 1.0 35B, DeepSeek V4 Flash, GLM 5.3) served by UIUC's
+Lumen, and calls only that model. The server needs one Lumen key; end users never do (they
+log in, or use a ModelMesh `mm_` key for the API). Put the key in `.env` (copy
+`.env.example`; `.env` is git-ignored):
 
 ```bash
-export ANTHROPIC_API_KEY=your-api-key
-export MODELMESH_PROVIDER=anthropic
-export MODELMESH_DEFAULT_MODEL=your-model-id
-export MODELMESH_INPUT_PRICE=0      # optional: USD per 1M input tokens
-export MODELMESH_OUTPUT_PRICE=0     # optional: USD per 1M output tokens
+cp .env.example .env     # then set LUMEN_API_KEY=... in .env
 python manage.py runserver
 ```
+
+Thinking effort is `high` (`ROUTER_REASONING_EFFORT` in `.env`). Lumen may need the
+campus network or VPN. Costs are in Lumen coins. Without a key, prompts are saved as errors
+("No Lumen API key found"). To use the
+old single-model mock instead: `export MODELMESH_ROUTER=accounts.services.default_router`.
+
+### Smart router
+
+- Screens: **Routing** in the nav (`/routing/`) for rules, weights and a dry-run test
+  prompt; **My routed requests** → **Explain & rate** for why a model was chosen and star
+  feedback. Only staff users can edit rules and weights
+  (`python manage.py createsuperuser`).
+- Preview API: `POST /routing/api/preview` with `{"prompt": "...", "priority": "balanced"}`
+  returns the model the router would pick, without calling it.
+- Until it is trained, the router uses keyword rules. To train it on real benchmark data,
+  follow [router/benchmark/README.md](router/benchmark/README.md). How it works:
+  [docs/ai_plan.md](docs/ai_plan.md).
+- The first request after a server start takes a few extra seconds while the embedding
+  model loads (downloaded once, about 90MB, to the Hugging Face cache).
 
 ## How the other apps plug in
 
