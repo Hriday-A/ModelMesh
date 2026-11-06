@@ -76,7 +76,7 @@ class Command(BaseCommand):
 
     def run_one(self, prompt, model):
         record = {"prompt_id": prompt["id"], "model_id": model.model_id, "status": "error", "answer": "",
-                  "input_tokens": 0, "output_tokens": 0, "latency_ms": 0, "cost_usd": 0.0,
+                  "input_tokens": 0, "output_tokens": 0, "reasoning_tokens": None, "latency_ms": 0, "cost_usd": 0.0,
                   "stop_reason": None, "error": None, "ran_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
         for attempt, delay in enumerate([0] + RETRY_DELAYS):
             if delay:
@@ -94,7 +94,8 @@ class Command(BaseCommand):
                 return record
             record.update({
                 "status": "ok", "answer": answer["text"], "input_tokens": answer["input_tokens"],
-                "output_tokens": answer["output_tokens"], "latency_ms": answer["latency_ms"],
+                "output_tokens": answer["output_tokens"], "reasoning_tokens": answer.get("reasoning_tokens"),
+                "latency_ms": answer["latency_ms"],
                 "cost_usd": float(model.cost(answer["input_tokens"], answer["output_tokens"])),
                 "stop_reason": answer["stop_reason"], "error": None,
             })

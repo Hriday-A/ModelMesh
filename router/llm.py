@@ -41,7 +41,7 @@ def _error_detail(e):
 
 
 def complete(model_id, prompt):
-    """Return {"text", "input_tokens", "output_tokens", "latency_ms", "stop_reason"}."""
+    """Return {"text", "input_tokens", "output_tokens", "reasoning_tokens", "latency_ms", "stop_reason"}."""
     if not settings.LUMEN_API_KEY:
         raise ProviderError("No Lumen API key found. Set LUMEN_API_KEY in the .env file.")
 
@@ -95,6 +95,8 @@ def complete(model_id, prompt):
         "text": text,
         "input_tokens": usage.get("prompt_tokens", 0),
         "output_tokens": usage.get("completion_tokens", 0),  # includes thinking tokens
+        "reasoning_tokens": usage.get("reasoning_tokens")
+        or (usage.get("completion_tokens_details") or {}).get("reasoning_tokens"),
         "latency_ms": latency_ms,
         "stop_reason": finish,
     }
