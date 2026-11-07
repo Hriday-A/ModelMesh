@@ -105,11 +105,17 @@ class Command(BaseCommand):
             self.stdout.write("No spot_checks.csv yet: hand-grade about 30 answers to measure judge agreement.")
             return
         with path.open(newline="", encoding="utf-8") as f:
-            pairs = [
-                (int(r["human_score"]), scores[(r["prompt_id"], r["model_id"])])
-                for r in csv.DictReader(f)
-                if (r["prompt_id"], r["model_id"]) in scores and r.get("human_score", "").strip()
-            ]
+            rows = list(csv.DictReader(f))
+        key_path = bench_path("spot_check_key.json")
+        if rows and "item" in rows[0] and key_path.exists():  # blind sheet from make_spot_checks
+            key = json.loads(key_path.read_text(encoding="utf-8"))
+            for r in rows:
+                r.update(key.get(str(r["item"]).strip(), {}))
+        pairs = [
+            (int(r["human_score"]), scores[(r["prompt_id"], r["model_id"])])
+            for r in rows
+            if r.get("prompt_id") and (r["prompt_id"], r["model_id"]) in scores and (r.get("human_score") or "").strip()
+        ]
         if not pairs:
             self.stdout.write("spot_checks.csv has no rows that match judged answers.")
             return
