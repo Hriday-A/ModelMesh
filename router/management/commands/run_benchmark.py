@@ -54,6 +54,9 @@ class Command(BaseCommand):
         parser.add_argument("--retry-errors", action="store_true", help="Run again where a previous attempt failed.")
         parser.add_argument("--skip", nargs="+", default=[], help="Prompt ids to leave for later (e.g. --skip P015).")
         parser.add_argument("--workers", type=int, default=1, help="Calls to run at the same time (default 1).")
+        parser.add_argument("--retries", type=int, default=len(RETRY_DELAYS), choices=range(len(RETRY_DELAYS) + 1),
+                            help="Retries after a timeout, rate limit or server error (default 3). "
+                                 "Use 0 to record the error and move on; --retry-errors redoes it later.")
         parser.add_argument("--in-file-order", action="store_true",
                             help="Run prompts in file order. By default they rotate through categories and "
                                  "difficulties, so a run stopped early still covers them all evenly.")
@@ -87,6 +90,7 @@ class Command(BaseCommand):
         spent = sum(Decimal(str(r.get("cost_usd", 0))) for r in done.values())
         self.stdout.write(f"{len(todo)} calls to make ({len(done)} already saved, {spent:.4f} spent so far, in coins).")
 
+        self.retries = opts["retries"]
         self.workers = max(1, opts["workers"])  # saved on each answer: latency under parallel load is higher
         lock = threading.Lock()
         state = {"spent": spent, "n": 0}
@@ -136,7 +140,8 @@ class Command(BaseCommand):
                   "input_tokens": 0, "output_tokens": 0, "reasoning_tokens": None, "latency_ms": 0, "cost_usd": 0.0,
                   "stop_reason": None, "error": None, "ran_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
                   "workers": self.workers}
-        for attempt, delay in enumerate([0] + RETRY_DELAYS):
+        delays = [0] + RETRY_DELAYS[: self.retries]
+        for attempt, delay in enumerate(delays):
             if delay:
                 self.stdout.write(f"  {prompt['id']} {model.model_id}: retrying in {delay}s…")
                 time.sleep(delay)
@@ -157,7 +162,7 @@ class Command(BaseCommand):
             except ProviderError as e:
                 record["error"] = str(e)
                 retryable = "rate limiting" in str(e) or "Provider error (5" in str(e) or "Could not reach" in str(e)
-                if retryable and attempt < len(RETRY_DELAYS):
+                if retryable and attempt < len(delays) - 1:
                     continue
                 return record
             record.update({
