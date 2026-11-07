@@ -9,7 +9,7 @@ import time
 
 from . import classifier, features
 from .scoring import PRIORITY_WEIGHTS, apply_confidence_gate, score_candidates
-from .training import GOOD_SCORE
+from .training import GOOD_SCORE, counts_as_attempt
 
 
 def by_tier_closest(models, tier):
@@ -74,7 +74,7 @@ def evaluate(test, models, results, artifact, threshold):
     test_ids = {r["id"] for r in test}
     latency, cost = {}, {}
     for m in models:
-        ok = [r for (pid, mid), r in results.items() if mid == m.model_id and r.get("status") == "ok" and pid not in test_ids]
+        ok = [r for (pid, mid), r in results.items() if mid == m.model_id and counts_as_attempt(r) and pid not in test_ids]
         latency[m.model_id] = int(statistics.median(r["latency_ms"] for r in ok)) if ok else m.avg_latency_ms
         cost[m.model_id] = statistics.median(r["cost_usd"] for r in ok) if ok else m.avg_cost
 

@@ -16,6 +16,7 @@ model's name and the date in `judgments/JUDGE.md`.
 
 Rules for the judge:
 - Judge each answer on its own against the prompt. Do not rank answers against each other.
+- An answer marked "[No answer …]" means the model ran out of tokens while thinking: score it 1.
 - Length is not quality. A short correct answer can score 10.
 - For code, check that it would run and does what was asked.
 - For math, check the final answer and the key steps.
@@ -33,6 +34,8 @@ You are an expert evaluator. For each prompt below there are three anonymous ans
 Scale: 9–10 correct, complete, follows every instruction · 7–8 correct and useful with small issues · 4–6 partly correct or incomplete · 1–3 wrong, off-topic or ignores the instructions.
 
 If a "Reference from the benchmark" is given, use it to check correctness (final answers must agree; wording need not match; a reference summary is one good answer among many). If there is none, judge on your own knowledge.
+
+An answer that reads "[No answer. The model used its entire token budget thinking and never wrote a reply.]" gets a score of 1.
 
 Rules: judge each answer independently; do not reward length; for code, check it would run and does what was asked; for math, check the final answer and key steps; not following a requested format costs points.
 

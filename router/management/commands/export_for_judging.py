@@ -14,7 +14,7 @@ import re
 from django.core.management.base import BaseCommand, CommandError
 
 from router.models import RouterModel
-from router.training import BenchmarkError, bench_path, read_prompts, read_results
+from router.training import NO_ANSWER_TEXT, BenchmarkError, bench_path, counts_as_attempt, read_prompts, read_results
 
 LABELS = "ABCDEFGH"
 
@@ -47,7 +47,7 @@ class Command(BaseCommand):
         ready, skipped = [], []
         for p in prompts:
             answers = [results.get((p["id"], m)) for m in model_ids]
-            if all(a and a["status"] == "ok" for a in answers):
+            if all(a and counts_as_attempt(a) for a in answers):
                 ready.append((p, answers))
             else:
                 skipped.append(p["id"])
@@ -73,7 +73,7 @@ class Command(BaseCommand):
                 if prompt.get("reference"):
                     parts.append(f"\n### Reference from the benchmark (for checking; wording need not match)\n\n{prompt['reference']}\n")
                 for i, a in enumerate(shuffled):
-                    parts.append(f"\n### Answer {LABELS[i]}\n\n{a['answer']}\n")
+                    parts.append(f"\n### Answer {LABELS[i]}\n\n{a['answer'] if a['status'] == 'ok' else NO_ANSWER_TEXT}\n")
                 parts.append("\n---\n")
             parts.append("\nReply with only the CSV block: prompt_id,label,score,reason\n")
             (batch_dir / f"batch_{n:02d}.md").write_text("".join(parts), encoding="utf-8")

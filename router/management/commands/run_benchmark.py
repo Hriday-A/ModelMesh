@@ -13,13 +13,14 @@ import statistics
 import time
 from decimal import Decimal
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from accounts.services import ProviderError
 from router import llm
-from router.llm import QuotaExceeded
+from router.llm import QuotaExceeded, ThinkingBudgetExceeded
 from router.models import RouterModel
-from router.training import BenchmarkError, bench_path, read_prompts, read_results
+from router.training import BenchmarkError, bench_path, counts_as_attempt, read_prompts, read_results
 
 RETRY_DELAYS = [10, 30, 60]  # seconds, for rate limits and server errors
 
@@ -86,6 +87,16 @@ class Command(BaseCommand):
                 answer = llm.complete(model.model_id, prompt["prompt"])
             except QuotaExceeded:
                 raise CommandError("The Lumen coin budget is spent. Wait for it to refill, then rerun; finished answers are kept.")
+            except ThinkingBudgetExceeded as e:
+                # A real outcome, not a glitch: the model gave no answer, and the tokens cost coins.
+                u = e.usage
+                record.update({
+                    "error": str(e), "error_kind": "thinking_budget", "max_tokens": settings.ROUTER_MAX_TOKENS,
+                    "input_tokens": u["input_tokens"], "output_tokens": u["output_tokens"],
+                    "reasoning_tokens": u["reasoning_tokens"], "latency_ms": u["latency_ms"],
+                    "cost_usd": float(model.cost(u["input_tokens"], u["output_tokens"])),
+                })
+                return record
             except ProviderError as e:
                 record["error"] = str(e)
                 retryable = "rate limiting" in str(e) or "Provider error (5" in str(e) or "Could not reach" in str(e)
@@ -106,7 +117,7 @@ class Command(BaseCommand):
         """Store each model's median latency and cost per answer; the router uses them for speed and cost."""
         results = read_results()
         for model in models:
-            ok = [r for (pid, mid), r in results.items() if mid == model.model_id and r["status"] == "ok"]
+            ok = [r for (pid, mid), r in results.items() if mid == model.model_id and counts_as_attempt(r)]
             if ok:
                 model.avg_latency_ms = int(statistics.median(r["latency_ms"] for r in ok))
                 model.avg_cost = Decimal(str(statistics.median(r["cost_usd"] for r in ok))).quantize(Decimal("0.00000001"))

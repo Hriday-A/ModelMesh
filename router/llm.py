@@ -31,6 +31,17 @@ class QuotaExceeded(ProviderError):
     """The Lumen coin budget is spent. Retrying cannot help until it refills."""
 
 
+class ThinkingBudgetExceeded(ProviderError):
+    """The model spent its whole token budget thinking and wrote no answer.
+
+    The tokens were still used (and billed), so the usage is kept on the error.
+    """
+
+    def __init__(self, message, usage):
+        super().__init__(message)
+        self.usage = usage
+
+
 def _error_detail(e):
     """(code, message) from an HTTP error body, tolerating non-JSON bodies."""
     try:
@@ -89,7 +100,11 @@ def complete(model_id, prompt):
         raise ProviderError("The provider returned an unexpected response.")
     if not text.strip():
         if finish == "length":
-            raise ProviderError("The model used all its tokens thinking. Raise ROUTER_MAX_TOKENS or lower the effort.")
+            raise ThinkingBudgetExceeded(
+                "The model used all its tokens thinking. Raise ROUTER_MAX_TOKENS or lower the effort.",
+                {"input_tokens": usage.get("prompt_tokens", 0), "output_tokens": usage.get("completion_tokens", 0),
+                 "reasoning_tokens": usage.get("reasoning_tokens"), "latency_ms": latency_ms},
+            )
         raise ProviderError("The model returned an empty answer.")
     return {
         "text": text,

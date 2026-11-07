@@ -58,6 +58,17 @@ def read_prompts(path=None):
     return [{k: (v or "").strip() for k, v in row.items()} for row in rows]
 
 
+def counts_as_attempt(record):
+    """An answer the model really produced, or a real 'no answer' (thinking budget used up).
+
+    Both cost time and coins, so both count in median latency and cost, and both are judged.
+    """
+    return record.get("status") == "ok" or record.get("error_kind") == "thinking_budget"
+
+
+NO_ANSWER_TEXT = "[No answer. The model used its entire token budget thinking and never wrote a reply.]"
+
+
 def read_results(path=None):
     """{(prompt_id, model_id): record}. Later lines win, so reruns replace old answers."""
     path = Path(path or bench_path("results.jsonl"))
