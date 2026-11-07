@@ -19,9 +19,12 @@ from django.conf import settings
 
 from .models import CATEGORY_CHOICES
 
-# A judge score of GOOD_SCORE-10 out of 10 counts as a good answer. 7 = "correct and useful"
-# (the rubric's bar); set ROUTER_GOOD_SCORE=9 for a stricter "near-perfect" bar.
-GOOD_SCORE = int(os.environ.get("ROUTER_GOOD_SCORE", "7"))
+# A judge score of GOOD_SCORE-10 out of 10 counts as a good answer. 9 = "near-perfect".
+# Chosen over 7 ("correct and useful") because at 7 the classifiers learned nothing beyond the
+# base rate on the training prompts (75-89% of answers were "good"), while at 9 the small
+# model's classifier beat its base rate by 11 points in cross-validation. 7 is kept as a
+# comparison: ROUTER_GOOD_SCORE=7.
+GOOD_SCORE = int(os.environ.get("ROUTER_GOOD_SCORE", "9"))
 CATEGORIES = [c for c, _ in CATEGORY_CHOICES]
 DIFFICULTIES = ["easy", "medium", "hard"]
 

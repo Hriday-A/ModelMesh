@@ -1,8 +1,11 @@
 # Judging rubric
 
 The judge scores **answer quality only**, from 1 to 10. Cost and latency are measured
-by `run_benchmark`; they are never part of the score. A score of **7 or more counts
-as a good answer**: that is the label the router learns from.
+by `run_benchmark`; they are never part of the score. The judge is not told where the
+"good" line is. The router counts a score of **9 or more as a good answer** (near-perfect):
+that is the label it learns from. The bar was first 7; it was raised to 9 because at 7 most
+answers were "good" and the classifiers learned nothing beyond that base rate on the training
+prompts (see docs/ai_plan.md, section 6). `ROUTER_GOOD_SCORE=7` reproduces the original bar.
 
 When a model gave no answer (it timed out, or used its whole token budget thinking), it is
 not sent to the judge: `import_judgments` scores it 1 automatically, because for routing a

@@ -40,7 +40,8 @@ price and speed for the user's priority (Balanced, Cheapest, Fastest, Best quali
   Hugging Face model running on CPU. It turns a prompt into 384 numbers that capture its
   meaning. Measured: about 7 ms per prompt after loading.
 - **Quality predictors:** one scikit-learn logistic regression per LLM, trained on
-  "did the judge rate this model's answer 7/10 or better?". Output: P(good answer).
+  "did the judge rate this model's answer 9/10 or better?" (near-perfect; see section 6 for
+  why 9 and not 7). Output: P(good answer).
 - **Category classifier:** a logistic regression over the same embedding, predicting one of
   coding, math, summarization, writing, extraction, chat. Used for explanations, admin
   rules and feedback, not for the decision itself.
@@ -111,27 +112,95 @@ RouterModel), `RoutingSettings`, `RoutingDecision` (OneToOne `RequestLog`), `Fee
 
 ## 6. Evaluation plan and results
 
-Benchmark: 200 prompts from public benchmarks used by routing papers (RouteLLM, RouterBench), e.g. MBPP, HumanEval, GSM8K, MATH-500, CNN/DailyMail, SQuAD v2, DROP, MT-Bench, IFEval and Arena-Hard; see `router/benchmark/SOURCES.md`. 6 categories (160 train / 40 held-out test),
-each answered by all three models (`run_benchmark`). Every answer is scored 1–10 for
-quality by ChatGPT's strongest model, used offline with a fixed rubric
-(`router/benchmark/rubric.md`), anonymized A/B/C answers, and about 30 hand-graded spot
-checks to measure judge agreement. Cost and latency are measured, not judged.
+### Setup
 
-Metrics (`evaluate_router` → `docs/eval/router_eval.md`):
-- average judge score and share of good answers;
-- total cost (coins) and share of always-large cost;
-- quality kept vs. always-large;
-- how often the router matches the oracle (cheapest model the judge rated good);
-- calibration of P(good); router overhead in ms;
-- a cost-vs-quality curve across cost weights;
-- baselines: always-small, always-medium, always-large, random, keyword rules.
+- **Prompts:** 200 items from public benchmarks used by routing papers (RouteLLM, RouterBench):
+  MBPP, HumanEval, BigCodeBench-Hard, GSM8K, MATH-500, XSum, CNN/DailyMail, SQuAD v2, Dolly,
+  DROP, MT-Bench, IFEval and Arena-Hard. 6 categories × easy/medium/hard; sources, filters and
+  licenses in `router/benchmark/SOURCES.md`.
+- **Answers:** every prompt was sent to all three models on Lumen (`run_benchmark`,
+  `reasoning_effort=high`): 600 calls, 0.56 coins in total. The main run allowed 4–5 minutes
+  and 12,000 tokens per answer; unfinished answers were retried with 10 minutes and 32,000
+  tokens, and a 30-minute retry was started but stopped for time. Answers that never finished
+  (DeepSeek: 31 timeouts; Ornith: 10 thinking-budget overruns) are scored 1 automatically. 4 prompts were
+  dropped because Lumen returned server errors (500), leaving **196 prompts**.
+- **Judge:** GPT-6 Astra (high thinking) in ChatGPT, used offline, one new chat per batch of
+  10 prompts, answers anonymized and shuffled, with the benchmark's reference answer when
+  there is one (see `router/benchmark/judgments/JUDGE.md`). It scores quality only, 1–10.
+  Cost and latency are measured, not judged.
+- **Split:** 156 prompts to train, 40 held out for testing, stratified by category, fixed seed.
 
-**Results:** to be filled in from `docs/eval/router_eval.md` once the benchmark has been
-run and judged. No results are claimed before then.
+### What the benchmark showed about the models (196 prompts)
+
+| | Ornith 1.0 35B (small) | DeepSeek V4 Flash (medium) | GLM 5.3 (large) |
+|---|---|---|---|
+| Near-perfect answers (score 9–10) | 53% | 67% | 72% |
+| Acceptable answers (score 7–10) | 78% | 81% | 90% |
+| No answer (timeout / thinking budget) | 10 | 31 | 0 |
+| Median latency on Lumen | 11.9 s | 16.3 s | 2.5 s |
+| Median coins per answer | 0.00018 | 0.00016 | 0.00150 |
+| Median output tokens (of which thinking) | 1,667 (1,362) | 192 (82) | 279 (18) |
+| Median tokens per second on Lumen | 145 | 11 | 110 |
+
+- **Size did not predict speed.** The largest model, GLM, was the fastest and the best, but
+  costs about 8–10× more per answer. Ornith generates fastest but thinks the longest; DeepSeek
+  writes short answers but Lumen serves it at about 11 tokens per second, so its latency and
+  timeouts reflect the hosting more than the model.
+- **Where the small model is enough** (share of near-perfect answers, small / medium / large):
+  extraction 79% / 79% / 73% and coding 67% / 61% / 70% are close; summarization
+  45% / 91% / 94% and writing 36% / 55% / 64% are not; chat (mostly Arena-Hard and MT-Bench)
+  is hard for all three (19% / 38% / 41%).
+- **The routing opportunity:** on 145 of 196 prompts (74%) a cheaper model than GLM gave a
+  near-perfect answer (Ornith on 104, DeepSeek on another 41). GLM alone succeeded on 16; no
+  model did on 35.
+
+### Choosing the "good answer" bar: 7 vs. 9
+
+The router learns from "was this answer good?". With the rubric's bar of 7, 78–90% of answers
+were "good", and on the **training prompts** the classifiers learned nothing beyond that base
+rate (cross-validated accuracy equal to always guessing "good": 75%, 79%, 89%). With a bar of
+9 ("near-perfect"), the labels are more balanced and the small model's classifier beat its
+base rate by 11 points (63% vs. 52%); 77 prompts instead of 53 separate the models. The bar
+was therefore set to **9**, using training data only. Results at 7 are kept for comparison
+(`docs/eval/router_eval_bar7.md`).
+
+### Router results on the 40 held-out prompts (bar 9; `docs/eval/router_eval.md`)
+
+| Strategy | Near-perfect answers | Avg judge score | Cost vs. always-GLM | Avg latency |
+|---|---|---|---|---|
+| Always Ornith (small) | 57% | 8.30 | 12% | 13.3 s |
+| Always DeepSeek (medium) | 75% | 8.25 | 11% | 58.4 s |
+| Always GLM (large) | 80% | 9.28 | 100% | 3.2 s |
+| Random | 71% | 8.61 | 41% | 25.0 s |
+| Keyword rules (no ML) | 70% | 8.38 | 33% | 35.6 s |
+| **Router · Balanced** | **78%** | **8.75** | **46%** | 31.2 s |
+| Router · Best quality | 80% | 9.15 | 77% | 13.9 s |
+| Oracle (perfect router) | 90% | 9.35 | 56% | 16.1 s |
+
+- **Balanced** keeps 78% near-perfect answers, 2 points below always using GLM, at 46% of its
+  cost, and beats random (71%) and keyword rules (70%) at a similar cost.
+- **Always DeepSeek** is a strong simple baseline (75% at 11% of the cost) if users can wait
+  about a minute on Lumen.
+- **Predictions:** test accuracy 70% (Ornith, base rate 57%), 72% (DeepSeek, 75%) and
+  80% (GLM, 80%): only the small model's classifier adds information. The category classifier
+  is 90% accurate. Router overhead: **9 ms** per request (embedding + scoring, CPU).
+- **The confidence bar dominates.** With probabilities mostly between 40% and 75%, the 0.6
+  confidence bar decides most picks, so cost weights from 0.2 to 2.0 give the same choices and
+  Balanced equals Cheapest. Tuning the bar is the first improvement (section 8).
+- **At bar 7** (for comparison) Balanced reached 90% acceptable answers at 45% of the cost,
+  the same as random (89% at 41%): the router added nothing at that bar.
+
+With 40 test prompts, one prompt is 2.5 points: the router's 7-point lead over random is about
+3 prompts. The direction is consistent with the training-set results, but it is not conclusive.
+
+**Judge agreement:** _pending — about 30 blind hand-graded answers
+(`router/benchmark/spot_checks.csv`; `import_judgments` prints the agreement)._
 
 ## 7. Known limitations
 
 - A 40-prompt test set is small; one prompt moves a rate by 2.5 points.
+- Labels are skewed toward high scores (about half of judged answers got 10), partly because
+  public benchmark items may be memorized; the router has relatively few failures to learn from.
 - Contamination: the benchmark items are public and older than the three models, so the models
   may have seen them in training (most likely for GSM8K, MATH, HumanEval and MBPP). The judge
   still grades fairly against the reference, but the router may learn that a small model is
@@ -139,6 +208,9 @@ run and judged. No results are claimed before then.
   test slice is planned for Dec 8 to measure this.
 - The benchmark ran several calls to Lumen at once (`--workers`) to finish in time. If Lumen
   queues requests per key, measured latencies are somewhat higher than for a single request.
+- Timeouts were not given equal time: most of DeepSeek's 31 timeouts had 4–10 minutes, not
+  the 30 minutes planned, because the last retry was stopped for time. Some would probably
+  have finished, so DeepSeek's quality is somewhat understated.
 - No-answers count as failures: when a model timed out (no reply within 4–10 minutes on
   Lumen) or spent its whole token budget thinking, that answer is scored 1 automatically.
   This mostly hit DeepSeek V4 Flash on hard prompts (36 timeouts) and Ornith (11 budget
@@ -159,5 +231,8 @@ run and judged. No results are claimed before then.
 - Grow the benchmark to about 300–400 prompts and retrain.
 - Compare a fine-tuned small classifier and Jev with the logistic-regression baseline.
 - Multi-turn routing once the Playground has conversations.
-- Calibration fixes and threshold tuning based on the evaluation (Part 4.4 improvement).
+- Tune the confidence bar (now 0.6, which overrides the cost weight) with cross-validation
+  on the training prompts, then re-test (Part 4.4 improvement).
+- Try features beyond the small embedder (prompt length, category, a stronger embedding model)
+  and more hard prompts, so the medium and large classifiers learn more than their base rate.
 - README_AI.md, deployment and cost/scalability write-up (Parts 5–6).
