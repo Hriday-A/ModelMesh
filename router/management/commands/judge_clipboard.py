@@ -104,7 +104,11 @@ class Command(BaseCommand):
             self.stdout.write("  2. Copy ChatGPT's whole reply (the copy button under it).")
             self.stdout.write("  3. Come back and press Enter.  (s = skip this batch, q = quit)")
             while True:
-                choice = input("> ").strip().lower()
+                try:
+                    choice = input("> ").strip().lower()
+                except (KeyboardInterrupt, EOFError):
+                    choice = "q"
+                    self.stdout.write("")
                 if choice == "q":
                     self.stdout.write("Stopped. Run judge_clipboard again to continue.")
                     return
