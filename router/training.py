@@ -8,6 +8,7 @@ Files in router/benchmark/ (see the README there):
 """
 
 import csv
+import os
 import json
 import random
 from collections import Counter
@@ -18,7 +19,9 @@ from django.conf import settings
 
 from .models import CATEGORY_CHOICES
 
-GOOD_SCORE = 7  # a judge score of 7–10 out of 10 counts as a good answer
+# A judge score of GOOD_SCORE-10 out of 10 counts as a good answer. 7 = "correct and useful"
+# (the rubric's bar); set ROUTER_GOOD_SCORE=9 for a stricter "near-perfect" bar.
+GOOD_SCORE = int(os.environ.get("ROUTER_GOOD_SCORE", "7"))
 CATEGORIES = [c for c, _ in CATEGORY_CHOICES]
 DIFFICULTIES = ["easy", "medium", "hard"]
 

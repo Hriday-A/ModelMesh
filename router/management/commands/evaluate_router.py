@@ -47,6 +47,10 @@ class Command(BaseCommand):
         test = [r for r in rows if r["id"] in test_ids and all((r["id"], m.model_id) in results for m in models)]
         if not test:
             raise CommandError("No test prompts have labels and results for every model.")
+        if artifact.get("good_score", GOOD_SCORE) != GOOD_SCORE:
+            raise CommandError(
+                f"This router was trained with a good-answer bar of {artifact['good_score']}, but the bar is now "
+                f"{GOOD_SCORE}. Run with ROUTER_GOOD_SCORE={artifact['good_score']} or retrain.")
         missing = [m.model_id for m in models if m.model_id not in artifact["models"]]
         if missing:
             raise CommandError(f"The trained router does not know {', '.join(missing)}. Retrain it.")
