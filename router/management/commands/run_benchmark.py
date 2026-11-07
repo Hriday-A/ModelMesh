@@ -30,11 +30,12 @@ RETRY_DELAYS = [10, 30, 60]  # seconds, for rate limits and server errors
 
 
 def rotate_categories(prompts):
-    """Interleave prompts by category (coding, math, ..., coding, math, ...), keeping file order within each."""
-    by_category = {}
+    """Interleave prompts by category and difficulty (coding-easy, coding-medium, coding-hard, math-easy, ...),
+    keeping file order within each group, so any prefix of the run is balanced on both."""
+    by_group = {}
     for p in prompts:
-        by_category.setdefault(p["category"], []).append(p)
-    queues = list(by_category.values())
+        by_group.setdefault((p["category"], p["difficulty"]), []).append(p)
+    queues = list(by_group.values())
     ordered = []
     while any(queues):
         for q in queues:
@@ -54,8 +55,8 @@ class Command(BaseCommand):
         parser.add_argument("--skip", nargs="+", default=[], help="Prompt ids to leave for later (e.g. --skip P015).")
         parser.add_argument("--workers", type=int, default=1, help="Calls to run at the same time (default 1).")
         parser.add_argument("--in-file-order", action="store_true",
-                            help="Run prompts in file order. By default they rotate through the categories, "
-                                 "so a run stopped early still covers every category evenly.")
+                            help="Run prompts in file order. By default they rotate through categories and "
+                                 "difficulties, so a run stopped early still covers them all evenly.")
 
     def handle(self, *args, **opts):
         try:
@@ -86,6 +87,7 @@ class Command(BaseCommand):
         spent = sum(Decimal(str(r.get("cost_usd", 0))) for r in done.values())
         self.stdout.write(f"{len(todo)} calls to make ({len(done)} already saved, {spent:.4f} spent so far, in coins).")
 
+        self.workers = max(1, opts["workers"])  # saved on each answer: latency under parallel load is higher
         lock = threading.Lock()
         state = {"spent": spent, "n": 0}
         max_spend = Decimal(str(opts["max_spend"]))
@@ -132,7 +134,8 @@ class Command(BaseCommand):
     def run_one(self, prompt, model):
         record = {"prompt_id": prompt["id"], "model_id": model.model_id, "status": "error", "answer": "",
                   "input_tokens": 0, "output_tokens": 0, "reasoning_tokens": None, "latency_ms": 0, "cost_usd": 0.0,
-                  "stop_reason": None, "error": None, "ran_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
+                  "stop_reason": None, "error": None, "ran_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                  "workers": self.workers}
         for attempt, delay in enumerate([0] + RETRY_DELAYS):
             if delay:
                 self.stdout.write(f"  {prompt['id']} {model.model_id}: retrying in {delay}s…")
