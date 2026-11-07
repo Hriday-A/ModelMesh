@@ -37,8 +37,12 @@ saves each model's median latency and median cost per answer for the router's sp
 ## 3. Judge the answers (offline, in ChatGPT)
 
 ```bash
-python manage.py export_for_judging --batch-size 5
+python manage.py export_for_judging --batch-size 10
 ```
+
+Easiest (macOS): `python manage.py judge_clipboard`. It copies each batch to your
+clipboard; you paste it into a new ChatGPT chat, copy the reply and press Enter. It checks the
+reply and saves it for you. Or do it by hand:
 
 1. Open `judge_batches/batch_01.md`, start a **new chat** with ChatGPT's strongest model,
    and paste the whole file. Answers are labeled A/B/C in random order; the judge never
