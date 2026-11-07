@@ -1,0 +1,1057 @@
+{
+  "seed": 7,
+  "key": {
+    "P001": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P002": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P003": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P004": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P005": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P006": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P007": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P008": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P009": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P010": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P011": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P012": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P013": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P014": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P015": {
+      "A": "glm-5.3"
+    },
+    "P016": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P017": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P018": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P019": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P020": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P021": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P022": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P023": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P025": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P026": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P027": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P028": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P029": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P030": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P031": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P032": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P033": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P034": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P035": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P036": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P037": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P038": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P039": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P040": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P041": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P042": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P043": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash"
+    },
+    "P044": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P045": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P046": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P047": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P048": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P049": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P050": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3"
+    },
+    "P051": {
+      "A": "glm-5.3"
+    },
+    "P052": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P053": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash"
+    },
+    "P054": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P055": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P056": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P057": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P059": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P060": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3"
+    },
+    "P061": {
+      "A": "glm-5.3"
+    },
+    "P062": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P063": {
+      "A": "glm-5.3"
+    },
+    "P064": {
+      "A": "glm-5.3"
+    },
+    "P065": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P066": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P067": {
+      "A": "glm-5.3"
+    },
+    "P068": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P069": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P070": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P071": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P072": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P073": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P074": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P075": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P076": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P077": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P078": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P079": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P080": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P081": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P082": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P083": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P084": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P085": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P086": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P087": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P088": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P089": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P090": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P091": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P092": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P093": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P094": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P095": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P096": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P097": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P098": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P099": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P100": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P101": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P102": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P103": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P104": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P105": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P106": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P107": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P108": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P109": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P110": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P111": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P112": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P113": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P114": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P115": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P116": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P117": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P118": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P119": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P120": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P121": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P122": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P123": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P124": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P125": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P126": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P127": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P128": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P129": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P130": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P131": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P132": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P133": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P134": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P135": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P136": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P137": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P138": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P139": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P140": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P141": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P142": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P143": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P144": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P145": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P146": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P147": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P148": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P149": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P150": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P151": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P152": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P153": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P154": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P155": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P156": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P157": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P158": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P159": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P160": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P161": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P162": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P163": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P164": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P165": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P166": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P167": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P168": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P169": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P170": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P171": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P172": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P173": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P174": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P175": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P176": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P177": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P178": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P179": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P181": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P182": {
+      "A": "deepseek-v4-flash",
+      "B": "glm-5.3",
+      "C": "ornith-1.0-35b"
+    },
+    "P183": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P184": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P185": {
+      "A": "deepseek-v4-flash",
+      "B": "ornith-1.0-35b",
+      "C": "glm-5.3"
+    },
+    "P186": {
+      "A": "glm-5.3",
+      "B": "deepseek-v4-flash",
+      "C": "ornith-1.0-35b"
+    },
+    "P187": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    },
+    "P188": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P189": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3",
+      "C": "deepseek-v4-flash"
+    },
+    "P191": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P192": {
+      "A": "ornith-1.0-35b",
+      "B": "deepseek-v4-flash",
+      "C": "glm-5.3"
+    },
+    "P193": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P194": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P195": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P196": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P197": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b"
+    },
+    "P198": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P199": {
+      "A": "ornith-1.0-35b",
+      "B": "glm-5.3"
+    },
+    "P200": {
+      "A": "glm-5.3",
+      "B": "ornith-1.0-35b",
+      "C": "deepseek-v4-flash"
+    }
+  },
+  "auto": {
+    "P015": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P027": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P028": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P029": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P030": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P031": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P032": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P033": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P041": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P043": {
+      "ornith-1.0-35b": "thinking_budget"
+    },
+    "P050": {
+      "ornith-1.0-35b": "thinking_budget"
+    },
+    "P051": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P053": {
+      "ornith-1.0-35b": "thinking_budget"
+    },
+    "P060": {
+      "ornith-1.0-35b": "thinking_budget"
+    },
+    "P061": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P063": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P064": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P067": {
+      "ornith-1.0-35b": "thinking_budget",
+      "deepseek-v4-flash": "timeout"
+    },
+    "P116": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P117": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P142": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P151": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P159": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P162": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P164": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P165": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P170": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P191": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P193": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P194": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P195": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P196": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P197": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P198": {
+      "deepseek-v4-flash": "timeout"
+    },
+    "P199": {
+      "deepseek-v4-flash": "timeout"
+    }
+  }
+}
