@@ -29,6 +29,20 @@ from router.training import BenchmarkError, bench_path, counts_as_attempt, read_
 RETRY_DELAYS = [10, 30, 60]  # seconds, for rate limits and server errors
 
 
+def rotate_categories(prompts):
+    """Interleave prompts by category (coding, math, ..., coding, math, ...), keeping file order within each."""
+    by_category = {}
+    for p in prompts:
+        by_category.setdefault(p["category"], []).append(p)
+    queues = list(by_category.values())
+    ordered = []
+    while any(queues):
+        for q in queues:
+            if q:
+                ordered.append(q.pop(0))
+    return ordered
+
+
 class Command(BaseCommand):
     help = "Run the benchmark prompts through every enabled model and save results.jsonl."
 
@@ -39,6 +53,9 @@ class Command(BaseCommand):
         parser.add_argument("--retry-errors", action="store_true", help="Run again where a previous attempt failed.")
         parser.add_argument("--skip", nargs="+", default=[], help="Prompt ids to leave for later (e.g. --skip P015).")
         parser.add_argument("--workers", type=int, default=1, help="Calls to run at the same time (default 1).")
+        parser.add_argument("--in-file-order", action="store_true",
+                            help="Run prompts in file order. By default they rotate through the categories, "
+                                 "so a run stopped early still covers every category evenly.")
 
     def handle(self, *args, **opts):
         try:
@@ -50,6 +67,8 @@ class Command(BaseCommand):
         if opts["skip"]:
             prompts = [p for p in prompts if p["id"] not in set(opts["skip"])]
             self.stdout.write(f"Skipping for now: {', '.join(opts['skip'])}. Run again without --skip to finish them.")
+        if not opts["in_file_order"]:
+            prompts = rotate_categories(prompts)
         models = RouterModel.objects.filter(enabled=True)
         if opts["models"]:
             models = models.filter(model_id__in=opts["models"])
