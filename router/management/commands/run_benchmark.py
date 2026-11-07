@@ -3,14 +3,18 @@
     python manage.py run_benchmark                 # all prompts × all enabled models
     python manage.py run_benchmark --limit 5       # try 5 prompts first
     python manage.py run_benchmark --max-spend 3   # stop once 3 coins are spent
+    python manage.py run_benchmark --workers 4     # 4 calls to Lumen at a time
 
 Calls the real Lumen API (needs LUMEN_API_KEY in .env). Costs are in Lumen coins.
 Safe to stop and rerun: answers already saved are skipped.
 """
 
 import json
+import os
 import statistics
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from decimal import Decimal
 
 from django.conf import settings
@@ -34,6 +38,7 @@ class Command(BaseCommand):
         parser.add_argument("--max-spend", type=float, default=10.0, help="Stop after this many coins (default 10).")
         parser.add_argument("--retry-errors", action="store_true", help="Run again where a previous attempt failed.")
         parser.add_argument("--skip", nargs="+", default=[], help="Prompt ids to leave for later (e.g. --skip P015).")
+        parser.add_argument("--workers", type=int, default=1, help="Calls to run at the same time (default 1).")
 
     def handle(self, *args, **opts):
         try:
@@ -62,20 +67,46 @@ class Command(BaseCommand):
         spent = sum(Decimal(str(r.get("cost_usd", 0))) for r in done.values())
         self.stdout.write(f"{len(todo)} calls to make ({len(done)} already saved, {spent:.4f} spent so far, in coins).")
 
+        lock = threading.Lock()
+        state = {"spent": spent, "n": 0}
+        max_spend = Decimal(str(opts["max_spend"]))
+
+        def work(prompt, model):
+            with lock:
+                if state["spent"] >= max_spend:
+                    return None
+            return self.run_one(prompt, model)
+
         with out_path.open("a", encoding="utf-8") as out:
-            for i, (prompt, model) in enumerate(todo, start=1):
-                if spent >= Decimal(str(opts["max_spend"])):
-                    self.stdout.write(self.style.WARNING(f"Stopped: reached --max-spend {opts['max_spend']} coins."))
-                    break
-                record = self.run_one(prompt, model)
-                spent += Decimal(str(record["cost_usd"]))
-                out.write(json.dumps(record) + "\n")
+            pool = ThreadPoolExecutor(max_workers=max(1, opts["workers"]))
+            futures = {pool.submit(work, p, m): (p, m) for p, m in todo}
+            try:
+                for future in as_completed(futures):
+                    prompt, model = futures[future]
+                    record = future.result()
+                    if record is None:
+                        continue
+                    with lock:  # one writer at a time, so lines never interleave
+                        state["spent"] += Decimal(str(record["cost_usd"]))
+                        state["n"] += 1
+                        out.write(json.dumps(record) + "\n")
+                        out.flush()
+                    status = "ok" if record["status"] == "ok" else f"ERROR {record['error']}"
+                    self.stdout.write(
+                        f"[{state['n']}/{len(todo)}] {prompt['id']} {model.model_id}: {status} · "
+                        f"{record['latency_ms']} ms · {record['cost_usd']:.5f} coins · total {state['spent']:.4f}"
+                    )
+            except KeyboardInterrupt:
                 out.flush()
-                status = "ok" if record["status"] == "ok" else f"ERROR {record['error']}"
-                self.stdout.write(
-                    f"[{i}/{len(todo)}] {prompt['id']} {model.model_id}: {status} · "
-                    f"{record['latency_ms']} ms · {record['cost_usd']:.5f} coins · total {spent:.4f}"
-                )
+                self.stdout.write(self.style.WARNING(
+                    f"Stopped. {state['n']} new answers saved; calls in progress are dropped. Rerun to continue."))
+                os._exit(130)  # don't wait for calls still in flight
+            except CommandError:
+                pool.shutdown(wait=False, cancel_futures=True)
+                raise
+            pool.shutdown()
+            if state["spent"] >= max_spend:
+                self.stdout.write(self.style.WARNING(f"Stopped early: reached --max-spend {opts['max_spend']} coins."))
 
         self.update_latencies(models)
 
@@ -85,7 +116,7 @@ class Command(BaseCommand):
                   "stop_reason": None, "error": None, "ran_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
         for attempt, delay in enumerate([0] + RETRY_DELAYS):
             if delay:
-                self.stdout.write(f"  retrying in {delay}s…")
+                self.stdout.write(f"  {prompt['id']} {model.model_id}: retrying in {delay}s…")
                 time.sleep(delay)
             try:
                 answer = llm.complete(model.model_id, prompt["prompt"])

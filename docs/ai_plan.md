@@ -137,6 +137,8 @@ run and judged. No results are claimed before then.
   still grades fairly against the reference, but the router may learn that a small model is
   "good enough" on memorized items and over-route new hard prompts to it. A fresh, hand-written
   test slice is planned for Dec 8 to measure this.
+- The benchmark ran several calls to Lumen at once (`--workers`) to finish in time. If Lumen
+  queues requests per key, measured latencies are somewhat higher than for a single request.
 - The judge is one LLM; its scores are checked against about 30 human grades, not all.
 - Single-turn only: each prompt is routed on its own, with no conversation history.
 - "Saved vs. the priciest model" assumes it would have used the same number of tokens. Thinking models can use very different token counts, so treat the saving as an estimate.
