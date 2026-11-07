@@ -33,6 +33,7 @@ class Command(BaseCommand):
         parser.add_argument("--models", nargs="+", help="Model ids to run (default: all enabled).")
         parser.add_argument("--max-spend", type=float, default=10.0, help="Stop after this many coins (default 10).")
         parser.add_argument("--retry-errors", action="store_true", help="Run again where a previous attempt failed.")
+        parser.add_argument("--skip", nargs="+", default=[], help="Prompt ids to leave for later (e.g. --skip P015).")
 
     def handle(self, *args, **opts):
         try:
@@ -41,6 +42,9 @@ class Command(BaseCommand):
             raise CommandError(str(e))
         if opts["limit"]:
             prompts = prompts[: opts["limit"]]
+        if opts["skip"]:
+            prompts = [p for p in prompts if p["id"] not in set(opts["skip"])]
+            self.stdout.write(f"Skipping for now: {', '.join(opts['skip'])}. Run again without --skip to finish them.")
         models = RouterModel.objects.filter(enabled=True)
         if opts["models"]:
             models = models.filter(model_id__in=opts["models"])
