@@ -58,15 +58,35 @@ def read_prompts(path=None):
     return [{k: (v or "").strip() for k, v in row.items()} for row in rows]
 
 
+# A model that gives no answer is a failed answer for routing: no user waits forever.
+# These are scored automatically and never shown to the judge.
+NO_ANSWER_SCORE = 1
+TIMEOUT_LATENCY_MS = 240_000  # the shortest timeout used in the benchmark: a lower bound on the wait
+
+
+def no_answer_kind(record):
+    """'thinking_budget' or 'timeout' if the model gave no answer, else None."""
+    if record.get("status") == "ok":
+        return None
+    error = record.get("error") or ""
+    if record.get("error_kind") == "thinking_budget" or error.startswith("The model used all its tokens thinking"):
+        return "thinking_budget"
+    if "timed out" in error:
+        return "timeout"
+    return None
+
+
 def counts_as_attempt(record):
-    """An answer the model really produced, or a real 'no answer' (thinking budget used up).
+    """Counts toward a model's median latency and cost: a real answer, or a thinking-budget
+    no-answer (its tokens were really used). Timeouts are left out: their cost is unknown."""
+    return record.get("status") == "ok" or (
+        record.get("error_kind") == "thinking_budget" and record.get("output_tokens", 0) > 0
+    )
 
-    Both cost time and coins, so both count in median latency and cost, and both are judged.
-    """
-    return record.get("status") == "ok" or record.get("error_kind") == "thinking_budget"
 
-
-NO_ANSWER_TEXT = "[No answer. The model used its entire token budget thinking and never wrote a reply.]"
+def is_final(record):
+    """An answer to judge, or a no-answer to score automatically."""
+    return record.get("status") == "ok" or no_answer_kind(record) is not None
 
 
 def read_results(path=None):

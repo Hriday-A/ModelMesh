@@ -139,6 +139,11 @@ run and judged. No results are claimed before then.
   test slice is planned for Dec 8 to measure this.
 - The benchmark ran several calls to Lumen at once (`--workers`) to finish in time. If Lumen
   queues requests per key, measured latencies are somewhat higher than for a single request.
+- No-answers count as failures: when a model timed out (no reply within 4–10 minutes on
+  Lumen) or spent its whole token budget thinking, that answer is scored 1 automatically.
+  This mostly hit DeepSeek V4 Flash on hard prompts (36 timeouts) and Ornith (11 budget
+  overruns). It reflects what a user would experience, but part of DeepSeek's "failure" is
+  Lumen's serving speed, not the model's ability.
 - The judge is one LLM; its scores are checked against about 30 human grades, not all.
 - Single-turn only: each prompt is routed on its own, with no conversation history.
 - "Saved vs. the priciest model" assumes it would have used the same number of tokens. Thinking models can use very different token counts, so treat the saving as an estimate.

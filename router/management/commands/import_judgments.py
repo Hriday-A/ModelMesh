@@ -14,7 +14,7 @@ import statistics
 
 from django.core.management.base import BaseCommand, CommandError
 
-from router.training import GOOD_SCORE, bench_path
+from router.training import GOOD_SCORE, NO_ANSWER_SCORE, bench_path
 
 
 def read_reply(path):
@@ -30,7 +30,8 @@ class Command(BaseCommand):
         key_path = bench_path("judge_key.json")
         if not key_path.exists():
             raise CommandError("judge_key.json not found. Run export_for_judging first.")
-        key = json.loads(key_path.read_text(encoding="utf-8"))["key"]
+        saved = json.loads(key_path.read_text(encoding="utf-8"))
+        key, auto = saved["key"], saved.get("auto", {})
         files = sorted(bench_path("judgments").glob("*.csv"))
         if not files:
             raise CommandError("No judgments/*.csv files yet. Save each ChatGPT reply there.")
@@ -64,17 +65,27 @@ class Command(BaseCommand):
         if errors:
             raise CommandError("Fix these rows and run again:\n  " + "\n  ".join(errors[:30]))
 
-        complete = [pid for pid, labels in key.items() if all((pid, m) in scores for m in labels.values())]
-        missing = [pid for pid in key if pid not in complete]
+        # No-answers are failed answers: scored automatically, never judged.
+        for pid, models in auto.items():
+            for model_id, kind in models.items():
+                scores[(pid, model_id)] = NO_ANSWER_SCORE
+                reasons[(pid, model_id)] = f"auto: no answer ({kind.replace('_', ' ')})"
+        all_ids = sorted(set(key) | set(auto))
+        models_for = {pid: set(key.get(pid, {}).values()) | set(auto.get(pid, {})) for pid in all_ids}
+        complete = [pid for pid in all_ids if all((pid, m) in scores for m in models_for[pid])]
+        missing = [pid for pid in all_ids if pid not in complete]
         with bench_path("labels.csv").open("w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["prompt_id", "model_id", "score", "good", "reason"])
             for pid in complete:
-                for model_id in sorted(key[pid].values()):
+                for model_id in sorted(models_for[pid]):
                     s = scores[(pid, model_id)]
                     writer.writerow([pid, model_id, s, int(s >= GOOD_SCORE), reasons[(pid, model_id)]])
 
         self.stdout.write(self.style.SUCCESS(f"Wrote labels for {len(complete)} prompts to labels.csv."))
+        n_auto = sum(len(v) for v in auto.values())
+        if n_auto:
+            self.stdout.write(f"{n_auto} no-answers were scored {NO_ANSWER_SCORE} automatically.")
         if missing:
             self.stdout.write(self.style.WARNING(f"{len(missing)} prompts are not fully judged yet: {', '.join(missing[:15])}"))
         self.report_by_model(scores)

@@ -9,7 +9,7 @@ import time
 
 from . import classifier, features
 from .scoring import PRIORITY_WEIGHTS, apply_confidence_gate, score_candidates
-from .training import GOOD_SCORE, counts_as_attempt
+from .training import GOOD_SCORE, TIMEOUT_LATENCY_MS, counts_as_attempt, no_answer_kind
 
 
 def by_tier_closest(models, tier):
@@ -77,6 +77,13 @@ def evaluate(test, models, results, artifact, threshold):
         ok = [r for (pid, mid), r in results.items() if mid == m.model_id and counts_as_attempt(r) and pid not in test_ids]
         latency[m.model_id] = int(statistics.median(r["latency_ms"] for r in ok)) if ok else m.avg_latency_ms
         cost[m.model_id] = statistics.median(r["cost_usd"] for r in ok) if ok else m.avg_cost
+
+    # A timeout recorded no tokens or time. When a strategy picks it, charge the shortest timeout
+    # as latency and the model's median cost as an estimate, instead of a misleading zero.
+    results = dict(results)
+    for k, r in list(results.items()):
+        if no_answer_kind(r) == "timeout":
+            results[k] = {**r, "latency_ms": TIMEOUT_LATENCY_MS, "cost_usd": float(cost.get(k[1]) or 0)}
 
     vectors = classifier.embed([r["prompt"] for r in test])  # also warms up the embedder
     # Router overhead as the app sees it: one prompt at a time, embedding + scoring.
