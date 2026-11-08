@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{% if provider %}Edit {{ provider.name }}{% else %}Add provider{% endif %}{% endblock %}
+{% block content %}
+<p><a href="{% url 'providers:list' %}">← Back to providers</a></p>
+<h1>{% if provider %}Edit {{ provider.name }}{% else %}Add provider{% endif %}</h1>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  <section class="card">
+    <h2>Provider</h2>
+    {% include "form_fields.html" with form=form %}
+  </section>
+
+  <section class="card">
+    <h2>Models</h2>
+    <p class="muted">Fill in the empty row to add a model. Leave it empty to add none.</p>
+    {{ formset.management_form }}
+    {% if formset.non_form_errors %}<div class="error-box" role="alert">{{ formset.non_form_errors }}</div>{% endif %}
+    {% for model_form in formset %}
+      <fieldset class="model-row">
+        <legend>{% if model_form.instance.pk %}{{ model_form.instance.name }}{% else %}New model{% endif %}</legend>
+        {% for hidden in model_form.hidden_fields %}{{ hidden }}{% endfor %}
+        {% if model_form.non_field_errors %}<div class="error-box">{{ model_form.non_field_errors }}</div>{% endif %}
+        <div class="filters">
+          {% for field in model_form.visible_fields %}
+            <div class="field{% if field.errors %} has-error{% endif %}">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}<small class="help">{{ field.help_text }}</small>{% endif %}
+              {% for error in field.errors %}<small class="error">{{ field.label }}: {{ error }}</small>{% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </fieldset>
+    {% endfor %}
+  </section>
+
+  <button type="submit" class="button">Save provider</button>
+  <a class="button secondary" href="{% url 'providers:list' %}">Cancel</a>
+</form>
+{% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "analytics",
+    "providers",
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,7 @@ MODELMESH_NAV = [
     ("Playground", "accounts:playground"),
     ("History", "accounts:history"),
     ("API Keys", "accounts:api_keys"),
+    ("Providers", "providers:list"),
     ("Usage", "analytics:dashboard"),
 ]
 
