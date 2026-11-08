@@ -45,9 +45,15 @@ old single-model mock instead: `export MODELMESH_ROUTER=accounts.services.defaul
   (`python manage.py createsuperuser`).
 - Preview API: `POST /routing/api/preview` with `{"prompt": "...", "priority": "balanced"}`
   returns the model the router would pick, without calling it.
-- Until it is trained, the router uses keyword rules. To train it on real benchmark data,
-  follow [router/benchmark/README.md](router/benchmark/README.md). How it works:
-  [docs/ai_plan.md](docs/ai_plan.md).
+- The trained router is committed (`router/artifacts/router.joblib`): trained on 200
+  public-benchmark prompts answered by all three models and judged by GPT-6 Astra. Results:
+  [docs/eval/router_eval.md](docs/eval/router_eval.md). How it works and what we found:
+  [docs/ai_plan.md](docs/ai_plan.md). To rebuild the data or retrain, follow
+  [router/benchmark/README.md](router/benchmark/README.md). If the trained file is missing,
+  the router falls back to keyword rules.
+- After pulling this branch, run `pip install -r requirements.txt` again (adds `certifi` and the
+  router's ML packages). With the router on, the amounts shown as "$" in the Playground and the
+  Usage dashboard are Lumen coins.
 - The first request after a server start takes a few extra seconds while the embedding
   model loads (downloaded once, about 90MB, to the Hugging Face cache).
 
