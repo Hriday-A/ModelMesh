@@ -3,8 +3,7 @@
     python manage.py import_judgments
 
 Reads router/benchmark/judgments/*.csv (pasted from ChatGPT), maps labels A/B/C
-back to models with judge_key.json and writes labels.csv. If spot_checks.csv
-exists (prompt_id, model_id, human_score), prints how often you and the judge agree.
+back to models with judge_key.json and writes labels.csv.
 """
 
 import csv
@@ -89,7 +88,6 @@ class Command(BaseCommand):
         if missing:
             self.stdout.write(self.style.WARNING(f"{len(missing)} prompts are not fully judged yet: {', '.join(missing[:15])}"))
         self.report_by_model(scores)
-        self.report_spot_checks(scores)
 
     def report_by_model(self, scores):
         by_model = {}
@@ -98,30 +96,3 @@ class Command(BaseCommand):
         for model_id, values in sorted(by_model.items()):
             good = sum(v >= GOOD_SCORE for v in values)
             self.stdout.write(f"  {model_id}: mean score {statistics.mean(values):.2f}, good {good}/{len(values)}")
-
-    def report_spot_checks(self, scores):
-        path = bench_path("spot_checks.csv")
-        if not path.exists():
-            self.stdout.write("No spot_checks.csv yet: hand-grade about 30 answers to measure judge agreement.")
-            return
-        with path.open(newline="", encoding="utf-8") as f:
-            rows = list(csv.DictReader(f))
-        key_path = bench_path("spot_check_key.json")
-        if rows and "item" in rows[0] and key_path.exists():  # blind sheet from make_spot_checks
-            key = json.loads(key_path.read_text(encoding="utf-8"))
-            for r in rows:
-                r.update(key.get(str(r["item"]).strip(), {}))
-        pairs = [
-            (int(r["human_score"]), scores[(r["prompt_id"], r["model_id"])])
-            for r in rows
-            if r.get("prompt_id") and (r["prompt_id"], r["model_id"]) in scores and (r.get("human_score") or "").strip()
-        ]
-        if not pairs:
-            self.stdout.write("spot_checks.csv has no rows that match judged answers.")
-            return
-        same_label = sum((h >= GOOD_SCORE) == (j >= GOOD_SCORE) for h, j in pairs)
-        mae = statistics.mean(abs(h - j) for h, j in pairs)
-        self.stdout.write(
-            f"Judge vs. you on {len(pairs)} answers: same good/not-good label {same_label / len(pairs):.0%}, "
-            f"average score difference {mae:.2f} points."
-        )

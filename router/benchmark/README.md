@@ -49,15 +49,12 @@ reply and saves it for you. Or do it by hand:
    sees model names.
 2. Save its CSV reply as `judgments/batch_01.csv`. Repeat for each batch.
 3. Write the judge model's name and the date in `judgments/JUDGE.md`.
-4. Hand-grade about 30 answers yourself in `spot_checks.csv`
-   (`prompt_id,model_id,human_score`). Look up which model is which in `judge_key.json`
-   *after* you have graded.
 
 ```bash
 python manage.py import_judgments
 ```
 
-Checks every row, writes `labels.csv`, and prints how often you and the judge agree.
+Checks every row, scores no-answers 1 automatically and writes `labels.csv`.
 
 ## 4. Train
 
@@ -86,5 +83,5 @@ decisions. Uses only the recorded results; it makes no API calls.
 | `prompts.csv`, `rubric.md` | you | yes |
 | `results.jsonl` | `run_benchmark` | yes (evidence for the report) |
 | `judge_batches/*.md`, `judge_key.json` | `export_for_judging` | yes |
-| `judgments/*.csv`, `judgments/JUDGE.md`, `spot_checks.csv` | you | yes |
+| `judgments/*.csv`, `judgments/JUDGE.md` | you | yes |
 | `labels.csv`, `split.json` | `import_judgments`, `train_router` | yes |

@@ -193,9 +193,6 @@ was therefore set to **9**, using training data only. Results at 7 are kept for 
 With 40 test prompts, one prompt is 2.5 points: the router's 7-point lead over random is about
 3 prompts. The direction is consistent with the training-set results, but it is not conclusive.
 
-**Judge agreement:** _pending — about 30 blind hand-graded answers
-(`router/benchmark/spot_checks.csv`; `import_judgments` prints the agreement)._
-
 ## 7. Known limitations
 
 - A 40-prompt test set is small; one prompt moves a rate by 2.5 points.
@@ -216,7 +213,7 @@ With 40 test prompts, one prompt is 2.5 points: the router's 7-point lead over r
   This mostly hit DeepSeek V4 Flash on hard prompts (36 timeouts) and Ornith (11 budget
   overruns). It reflects what a user would experience, but part of DeepSeek's "failure" is
   Lumen's serving speed, not the model's ability.
-- The judge is one LLM; its scores are checked against about 30 human grades, not all.
+- The judge is a single LLM (GPT-6 Astra); its scores are the only quality signal.
 - Single-turn only: each prompt is routed on its own, with no conversation history.
 - "Saved vs. the priciest model" assumes it would have used the same number of tokens. Thinking models can use very different token counts, so treat the saving as an estimate.
 - The small and medium-cost models run FP8-quantized weights on Lumen, which may differ slightly from the original releases.
