@@ -70,6 +70,14 @@ class RouterTestCase(TestCase):
         self.tmp.cleanup()
 
 
+class RuleMatchingTests(RouterTestCase):
+    def test_keywords_match_whole_words_only(self):
+        rule = RoutingRule(category="chat", keywords="hi, how are you", preferred_model=self.models[SMALL])
+        self.assertEqual(rule.matches("Hi, how are you?"), "hi")
+        self.assertEqual(rule.matches("so, how are you doing"), "how are you")
+        self.assertIsNone(rule.matches("Is this a bug? Which line?"))
+
+
 class ScoringTests(RouterTestCase):
     def ranked(self, probs, priority):
         rows = score_candidates(list(self.models.values()), probs, PRIORITY_WEIGHTS[priority], {m: None for m in self.models})

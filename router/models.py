@@ -1,3 +1,4 @@
+import re
 from decimal import Decimal
 
 from django.conf import settings
@@ -75,8 +76,9 @@ class RoutingRule(models.Model):
         return [k.strip().lower() for k in self.keywords.split(",") if k.strip()]
 
     def matches(self, prompt):
+        """The first keyword found as a whole word or phrase ("hi" matches "hi there", not "this")."""
         text = prompt.lower()
-        return next((k for k in self.keyword_list() if k in text), None)
+        return next((k for k in self.keyword_list() if re.search(rf"(?<!\w){re.escape(k)}(?!\w)", text)), None)
 
     def clean(self):
         if not self.keyword_list():

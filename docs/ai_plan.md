@@ -195,6 +195,10 @@ With 40 test prompts, one prompt is 2.5 points: the router's 7-point lead over r
 
 ## 7. Known limitations
 
+- Coverage gap: every training prompt is a benchmark task, so the router has never seen small
+  talk. It predicts "hi, how are you?" as a writing/chat task and sends it to DeepSeek. Admin
+  rules on Screen 11 (whole-word keywords, e.g. "hi, hello, how are you" → Ornith) cover this
+  now; adding everyday prompts to the benchmark is planned for Dec 8.
 - A 40-prompt test set is small; one prompt moves a rate by 2.5 points.
 - Labels are skewed toward high scores (about half of judged answers got 10), partly because
   public benchmark items may be memorized; the router has relatively few failures to learn from.
