@@ -2,7 +2,7 @@
 
 Read this first. It records what each team member is building and how far each build has got. There is one status file per app. When you finish a task, tick it in your file and update its "Last updated" date.
 
-Last updated: 2026-11-03
+Last updated: 2026-11-08
 
 ## The project
 
@@ -13,7 +13,7 @@ ModelMesh is a Django 5.1 web app: an AI gateway that picks a model for each pro
 | App | Owner | Wireframe screens | Status | Details |
 |---|---|---|---|---|
 | `accounts` | Hriday Agarwal | 1–8 | Built in Part 1. P2-A3 integration and README work not started. | [hriday-accounts.md](hriday-accounts.md) |
-| `providers` | Omkar Chougule | 9–10 | Not started | [omkar-providers.md](omkar-providers.md) |
+| `providers` | Omkar Chougule | 9–10 | Built and tested on `feature/providers`. PR ready. `docs/roadmap.md` drafted. | [omkar-providers.md](omkar-providers.md) |
 | `router` | Srinath Venkatesh | 11–12 | Not started | [srinath-router.md](srinath-router.md) |
 | `analytics` | Manojkumar Mohankumar | 13–14 | First version merged into `main` (PR #1). | [manoj-analytics.md](manoj-analytics.md) |
 
@@ -44,7 +44,7 @@ ModelMesh is a Django 5.1 web app: an AI gateway that picks a model for each pro
 ## Open decisions
 
 1. **How the router uses AI.** Recommended: a small trained text classifier (scikit-learn, TF-IDF with logistic regression) on about 100 labeled sample prompts, with the keyword rules as the fallback.
-2. **`AIModel` field names.** Omkar and Srinath agree on them so the providers and router apps can be built at the same time.
+2. **`AIModel` field names.** Resolved for the draft: `AIModel` uses the same field names as `router.RouterModel`. The two tables stay separate until after 2026-11-09.
 
 ## Working rules
 

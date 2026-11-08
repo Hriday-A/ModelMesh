@@ -114,3 +114,11 @@ td form { margin: 0; }
 .model-bar { height: 10px; min-width: 2px; background: var(--accent); border-radius: 4px; }
 .actions-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
 progress { width: 100%; height: 12px; accent-color: var(--accent); }
+
+/* Providers app (Screens 9-10) */
+.page-head h2 { margin: 0; }
+.actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.actions form { margin: 0; }
+.model-row { border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1rem 0; margin: 0 0 1rem; }
+.model-row legend { font-weight: 600; padding: 0 .25rem; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

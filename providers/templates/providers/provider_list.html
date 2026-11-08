@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Providers & health{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Providers &amp; health</h1>
+  {% if user.is_staff %}<a class="button" href="{% url 'providers:create' %}">Add provider</a>{% endif %}
+</div>
+<p class="muted">Each provider hosts one or more models. Prices are per 1M tokens. Request counts cover answered requests in the last 24 hours.</p>
+
+{% for provider in providers %}
+  <section class="card" id="provider-{{ provider.pk }}" aria-labelledby="provider-{{ provider.pk }}-name">
+    <div class="page-head">
+      <h2 id="provider-{{ provider.pk }}-name">
+        {{ provider.name }}
+        {% if not provider.enabled %}<span class="badge">Disabled</span>{% endif %}
+      </h2>
+      {% if user.is_staff %}
+        <div class="actions">
+          <form method="post" action="{% url 'providers:check' provider.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button small secondary">Check now<span class="visually-hidden"> for {{ provider.name }}</span></button>
+          </form>
+          <a class="button small" href="{% url 'providers:edit' provider.pk %}">Edit<span class="visually-hidden"> {{ provider.name }}</span></a>
+        </div>
+      {% endif %}
+    </div>
+
+    <dl class="meta">
+      <div>
+        <dt>Health</dt>
+        <dd>
+          <span class="badge {% if provider.health_status == 'healthy' %}success{% elif provider.health_status == 'degraded' %}cached{% elif provider.health_status == 'down' %}error{% endif %}">{{ provider.get_health_status_display }}</span>
+        </dd>
+      </div>
+      <div><dt>Last checked</dt><dd>{% if provider.last_checked_at %}{{ provider.last_checked_at|timesince }} ago{% else %}Never{% endif %}</dd></div>
+      <div><dt>Requests (24 h)</dt><dd>{{ provider.stats.requests|default:0 }}</dd></div>
+      <div><dt>Avg latency</dt><dd>{% if provider.stats %}{{ provider.stats.avg_latency_ms|floatformat:0 }} ms{% else %}No data{% endif %}</dd></div>
+      <div><dt>Base URL</dt><dd>{% if provider.api_base_url %}<code>{{ provider.api_base_url }}</code>{% else %}None (offline){% endif %}</dd></div>
+    </dl>
+    {% if provider.health_detail %}<p class="muted">{{ provider.health_detail }}</p>{% endif %}
+
+    {% with models=provider.models.all %}
+      {% if models %}
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Models served by {{ provider.name }}</caption>
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Model ID</th>
+                <th scope="col">Input price</th>
+                <th scope="col">Output price</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for model in models %}
+                <tr>
+                  <th scope="row">{{ model.name }}</th>
+                  <td><code>{{ model.model_id }}</code></td>
+                  <td>{{ model.input_price_per_m|floatformat:4 }}</td>
+                  <td>{{ model.output_price_per_m|floatformat:4 }}</td>
+                  <td>{{ model.weight }}</td>
+                  <td>{% if model.enabled %}Enabled{% else %}Disabled{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>No models yet.</p>
+      {% endif %}
+    {% endwith %}
+  </section>
+{% empty %}
+  <p>No providers yet.{% if user.is_staff %} <a href="{% url 'providers:create' %}">Add the first one</a>.{% endif %}</p>
+{% endfor %}
+{% endblock %}

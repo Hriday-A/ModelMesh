@@ -19,9 +19,18 @@ class ProviderError(Exception):
 
 
 def estimate_cost(model, input_tokens, output_tokens):
-    # Prices are USD per 1M tokens. The Providers app (Part 2) will store a price per model.
+    """Cost of one request, using the model's own prices from the Providers app.
+
+    Models that aren't registered there fall back to the global
+    MODELMESH_INPUT_PRICE / MODELMESH_OUTPUT_PRICE settings (per 1M tokens).
+    """
+    from providers.services import model_cost  # Imported here: providers imports this module.
+
     if model == "mock-echo":
         return Decimal("0")
+    cost = model_cost(model, input_tokens, output_tokens)
+    if cost is not None:
+        return cost
     input_price = Decimal(settings.MODELMESH_INPUT_PRICE)
     output_price = Decimal(settings.MODELMESH_OUTPUT_PRICE)
     return (input_price * input_tokens + output_price * output_tokens) / Decimal(1_000_000)
@@ -46,44 +55,6 @@ def mock_completion(prompt):
     }
 
 
-def anthropic_completion(prompt, model):
-    import anthropic
-
-    if not model:
-        raise ProviderError("No model is configured. Set MODELMESH_DEFAULT_MODEL.")
-    client = anthropic.Anthropic()
-    try:
-        message = client.beta.messages.create(
-            model=model,
-            max_tokens=16000,
-            output_config={"effort": "medium"},
-            # If the model declines, the API retries on a fallback model in the same call.
-            betas=["server-side-fallback-2026-07-01"],
-            fallbacks="default",
-            messages=[{"role": "user", "content": prompt}],
-        )
-    except anthropic.AuthenticationError:
-        raise ProviderError("The Anthropic API key is missing or invalid.")
-    except anthropic.RateLimitError:
-        raise ProviderError("The provider is rate limiting requests. Try again shortly.")
-    except anthropic.APIStatusError as e:
-        raise ProviderError(f"Provider error ({e.status_code}): {e.message}")
-    except anthropic.APIConnectionError:
-        raise ProviderError("Could not reach the provider. Check your internet connection.")
-
-    if message.stop_reason == "refusal":
-        raise ProviderError("The model declined to answer this prompt.")
-
-    text = "".join(block.text for block in message.content if block.type == "text")
-    return {
-        "response": text,
-        "provider": "anthropic",
-        "model": message.model,
-        "input_tokens": message.usage.input_tokens,
-        "output_tokens": message.usage.output_tokens,
-    }
-
-
 def default_router(prompt, priority):
     """Placeholder router: same model for every prompt.
 
@@ -91,6 +62,8 @@ def default_router(prompt, priority):
     output_tokens, and optionally reason and cached. Raise ProviderError on failure.
     """
     if settings.MODELMESH_PROVIDER == "anthropic":
+        from providers.services import anthropic_completion  # Imported here: providers imports this module.
+
         result = anthropic_completion(prompt, settings.MODELMESH_DEFAULT_MODEL)
     else:
         result = mock_completion(prompt)
