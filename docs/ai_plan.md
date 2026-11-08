@@ -124,7 +124,7 @@ RouterModel), `RoutingSettings`, `RoutingDecision` (OneToOne `RequestLog`), `Fee
   tokens, and a 30-minute retry was started but stopped for time. Answers that never finished
   (DeepSeek: 31 timeouts; Ornith: 10 thinking-budget overruns) are scored 1 automatically. 4 prompts were
   dropped because Lumen returned server errors (500), leaving **196 prompts**.
-- **Judge:** GPT-6 Astra (high thinking) in ChatGPT, used offline, one new chat per batch of
+- **Judge:** Astra 6.1 (High) in ChatGPT, used offline, one new chat per batch of
   10 prompts, answers anonymized and shuffled, with the benchmark's reference answer when
   there is one (see `router/benchmark/judgments/JUDGE.md`). It scores quality only, 1–10.
   Cost and latency are measured, not judged.
@@ -213,7 +213,7 @@ With 40 test prompts, one prompt is 2.5 points: the router's 7-point lead over r
   This mostly hit DeepSeek V4 Flash on hard prompts (36 timeouts) and Ornith (11 budget
   overruns). It reflects what a user would experience, but part of DeepSeek's "failure" is
   Lumen's serving speed, not the model's ability.
-- The judge is a single LLM (GPT-6 Astra); its scores are the only quality signal.
+- The judge is a single LLM (Astra 6.1, High); its scores are the only quality signal.
 - Single-turn only: each prompt is routed on its own, with no conversation history.
 - "Saved vs. the priciest model" assumes it would have used the same number of tokens. Thinking models can use very different token counts, so treat the saving as an estimate.
 - The small and medium-cost models run FP8-quantized weights on Lumen, which may differ slightly from the original releases.
