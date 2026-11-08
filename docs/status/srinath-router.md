@@ -1,34 +1,37 @@
 # router: Srinath Venkatesh
 
-- **Status:** built, waiting on benchmark data to train
+- **Status:** done for the first draft; trained on real benchmark data, ready for PR
 - **Branch:** `feature/router`
 - **Wireframe screens:** 11 (Routing Rules), 12 (Routing Explanation & Feedback)
-- **Last updated:** 2026-11-05
+- **Last updated:** 2026-11-07
 
 ## Done
 
-- [x] `router` app: `RouterModel` (3 Lumen models (small/medium/large by parameters) with coin prices), `RoutingRule`, `RoutingSettings`,
+- [x] `router` app: `RouterModel` (3 Lumen models, small/medium/large by parameters, with coin
+  prices and measured median latency and cost per answer), `RoutingRule`, `RoutingSettings`,
   `RoutingDecision` (OneToOne `RequestLog`), `Feedback` (OneToOne `RequestLog`)
+- [x] Models on UIUC Lumen (OpenAI-compatible API, key in `.env`): Ornith 1.0 35B, DeepSeek V4
+  Flash, GLM 5.3, `reasoning_effort=high`
 - [x] `router.services.route(prompt, priority)` set as `MODELMESH_ROUTER`: embedding + one logistic
-  regression per model → P(good answer) → cost/speed/quality score → confidence bar → admin rules →
+  regression per model → P(good answer) → quality/cost/speed score → confidence bar → admin rules →
   calls one model, fails over to the next
 - [x] Keyword fallback when no trained classifier exists
-- [x] Real per-model cost written to `RequestLog.cost_usd` (Usage dashboard is now per-model correct)
+- [x] Real per-model cost written to `RequestLog.cost_usd` (in Lumen coins)
 - [x] Screen 11 `/routing/`: rules list, new/edit/delete (staff), weight sliders, dry-run test prompt
-- [x] Screen 12 `/routing/explain/<id>/`: score table, money saved, star feedback; `/routing/requests/`
+- [x] Screen 12 `/routing/explain/<id>/`: score table, savings, star feedback; `/routing/requests/`
 - [x] `POST /routing/api/preview`
-- [x] Benchmark pipeline: `run_benchmark`, `export_for_judging`, `import_judgments`, `train_router`,
-  `evaluate_router` (see `router/benchmark/README.md`)
-- [x] `docs/ai_plan.md`; 24 router tests
+- [x] Benchmark: 200 public-benchmark prompts (`router/benchmark/SOURCES.md`), 600 answers,
+  judged by GPT-6 Astra (High) in ChatGPT, 196 prompts labeled
+- [x] Router trained (bar: judge score 9+) and evaluated on 40 held-out prompts:
+  `docs/eval/router_eval.md` (bar 7 comparison: `router_eval_bar7.md`)
+- [x] `docs/ai_plan.md` with results (section 6); 26 router tests, 53 in total
+- [x] Checked end to end with a real request: Playground path → router → Lumen → explanation page
 
-## To do before 2026-11-09
+## To do
 
-- [ ] Create a Lumen API key, acknowledge the 3 models, put the key in `.env`
-- [ ] Run a 3-call test to confirm Lumen accepts `reasoning_effort=medium` for each model
-- [ ] Write ~200 prompts in `router/benchmark/prompts.csv`
-- [ ] Run the benchmark, judge in ChatGPT, import, train, evaluate
-- [ ] Fill section 6 of `docs/ai_plan.md` from `docs/eval/router_eval.md`
-- [ ] Open the PR
+- [ ] Open the PR into `main` (Nov 9)
+- [ ] Dec 8: tune the confidence bar with cross-validation, more and harder prompts, a fresh
+  hand-written test slice (contamination check), multi-turn routing
 
 ## Depends on / used by
 
