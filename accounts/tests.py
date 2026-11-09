@@ -1,5 +1,8 @@
 import json
+from types import SimpleNamespace
+from unittest import mock
 
+import anthropic
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
@@ -169,3 +172,59 @@ class ChatAPITests(AccountsTestCase):
         response = self.post({"prompt": "hi"})
         self.assertEqual(response.status_code, 502)
         self.assertEqual(response.json()["error"], "All providers are down.")
+
+
+def fake_message(stop_reason="end_turn"):
+    return SimpleNamespace(
+        stop_reason=stop_reason,
+        model="test-model",
+        content=[SimpleNamespace(type="text", text="Hello from the model")],
+        usage=SimpleNamespace(input_tokens=1000, output_tokens=2000),
+    )
+
+
+@override_settings(
+    MODELMESH_PROVIDER="anthropic",
+    MODELMESH_DEFAULT_MODEL="test-model",
+    MODELMESH_INPUT_PRICE="1",
+    MODELMESH_OUTPUT_PRICE="2",
+)
+class RealProviderTests(AccountsTestCase):
+    """The provider path, with the SDK replaced so no request leaves the machine."""
+
+    def setUp(self):
+        super().setUp()
+        patcher = mock.patch("anthropic.Anthropic")
+        self.create = patcher.start().return_value.beta.messages.create
+        self.addCleanup(patcher.stop)
+        self.client.force_login(self.user)
+
+    def send(self):
+        return self.client.post(reverse("accounts:playground"), {"prompt": "Hi", "priority": "balanced"})
+
+    def test_answer_is_logged_with_its_cost(self):
+        self.create.return_value = fake_message()
+        self.assertContains(self.send(), "Hello from the model")
+        log = RequestLog.objects.get()
+        self.assertEqual((log.provider, log.model_used, log.status), ("anthropic", "test-model", "success"))
+        self.assertEqual(str(log.cost_usd), "0.005000")
+
+    def test_refusal_is_an_error(self):
+        self.create.return_value = fake_message(stop_reason="refusal")
+        self.assertContains(self.send(), "declined to answer")
+        self.assertEqual(RequestLog.objects.get().status, "error")
+
+    def test_missing_key_shows_a_message_instead_of_crashing(self):
+        self.create.side_effect = TypeError("Could not resolve authentication method.")
+        self.assertContains(self.send(), "No Anthropic API key found")
+        self.assertEqual(RequestLog.objects.get().status, "error")
+
+    def test_unexpected_sdk_error_shows_a_message_instead_of_crashing(self):
+        self.create.side_effect = anthropic.AnthropicError("bad response")
+        self.assertContains(self.send(), "unexpected response")
+        self.assertEqual(RequestLog.objects.get().status, "error")
+
+    @override_settings(MODELMESH_DEFAULT_MODEL="")
+    def test_missing_model_shows_a_message(self):
+        self.assertContains(self.send(), "No model is configured")
+        self.create.assert_not_called()

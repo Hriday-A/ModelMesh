@@ -26,8 +26,8 @@ def anthropic_completion(prompt, model):
 
     if not model:
         raise ProviderError("No model is configured. Set MODELMESH_DEFAULT_MODEL.")
-    client = anthropic.Anthropic()
     try:
+        client = anthropic.Anthropic()
         message = client.beta.messages.create(
             model=model,
             max_tokens=16000,
@@ -45,6 +45,11 @@ def anthropic_completion(prompt, model):
         raise ProviderError(f"Provider error ({e.status_code}): {e.message}")
     except anthropic.APIConnectionError:
         raise ProviderError("Could not reach the provider. Check your internet connection.")
+    except (anthropic.CredentialsError, TypeError):
+        # With no credentials at all, the SDK raises TypeError when the request is built.
+        raise ProviderError("No Anthropic API key found. Set ANTHROPIC_API_KEY.")
+    except anthropic.AnthropicError:
+        raise ProviderError("The provider returned an unexpected response.")
 
     if message.stop_reason == "refusal":
         raise ProviderError("The model declined to answer this prompt.")
