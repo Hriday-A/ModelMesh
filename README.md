@@ -16,7 +16,9 @@ developer teams on small budgets. INFO 490 Project 2, Team ModelMesh (Team 7).
 
 ## Setup
 
-You need Python 3.10 or newer.
+You need Python 3.10 or newer. Check with `python3 --version`: on a Mac, the built-in `python3` is 3.9,
+and `pip install` then fails with "No matching distribution found for anthropic". Install a newer Python
+from python.org and create the environment with it, for example `python3.13 -m venv .venv`.
 
 ```bash
 git clone https://github.com/Hriday-A/ModelMesh.git
