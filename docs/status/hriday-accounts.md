@@ -1,9 +1,9 @@
 # accounts: Hriday Agarwal
 
-- **Status:** `analytics` is integrated and tested. README updated. Waiting for the `providers` and `router` pull requests.
+- **Status:** all four apps merged into `main` and tested together. README updated for the finished first draft.
 - **Branch:** `main` (merges everyone's pull requests)
 - **Wireframe screens:** 1–8 (Home, Sign up, Log in, Playground, History, Request detail, API Keys, Profile)
-- **Last updated:** 2026-11-05
+- **Last updated:** 2026-11-09
 
 ## Built so far
 
@@ -20,16 +20,16 @@
 ## P2-A3 tasks (due 2026-11-09)
 
 - [x] `analytics`: in `INSTALLED_APPS`, `MODELMESH_NAV` and `modelmesh/urls.py`; merged (PR #1).
-- [ ] Do the same for `providers` and `router` as their pull requests come in.
-- [ ] After each merge, run `python manage.py test` and try the Playground. Done for `analytics` on 2026-11-05: 32 tests pass, and a Playground prompt reaches History and Usage.
-- [ ] Once the router is merged, test the full flow: a Playground prompt goes through the router, is saved, and shows the chosen model and reason.
+- [x] `providers` (PR #3) and `router` (PR #2): merged; conflicts in settings, URLs and CSS resolved by keeping both apps.
+- [x] After each merge, run `python manage.py test` and try the Playground. On 2026-11-09 all 80 tests pass; one providers test was pinned to the mock route, since the router is now the default.
+- [x] Full flow tested on 2026-11-09 without a Lumen key: the prompt goes through the trained classifier, is saved with its routing decision and a clear "No Lumen API key" error, and the Playground links to the explanation page. A live Lumen answer was checked on the router branch.
 
 ## Submission piece: GitHub and README (Requirement 5, 10 pts)
 
 - [x] Update `README.md`: setup, environment variables, `migrate` for all apps, how to run the prototype and how to try the AI feature.
-- [ ] After the `router` and `providers` merges, update the README's Features table and "Try the AI" section, and add any new dependencies to `requirements.txt`.
+- [x] README updated for all four apps: Lumen key setup, environment variables, how the router works, and links to every document. `requirements.txt` includes the router's packages.
 - [x] Link `docs/product_scope.md` from the README.
-- [ ] Link `docs/ai_plan.md` and `docs/roadmap.md` from the README once they are merged.
+- [x] Link `docs/ai_plan.md` and `docs/roadmap.md` from the README.
 - [x] Check that no `.env` file or key is committed (scanned all history on 2026-11-05). `*.bin`, `*.safetensors` and `*.pt` are in `.gitignore`. Scan again before submitting.
 - [ ] 2026-11-08: clone the repo fresh and follow the README from scratch.
 - [ ] 2026-11-09: submit the repository URL on Canvas. The repo is public.

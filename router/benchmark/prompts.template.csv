@@ -1,0 +1,2 @@
+id,prompt,category,difficulty,source,reference
+P001,"Replace this line with your prompt. Quote prompts that contain commas or line breaks.",chat,easy,written by Srinath,"Optional: the benchmark's gold answer, shown to the judge"

@@ -3,7 +3,7 @@ from decimal import Decimal
 from unittest import mock
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import override_settings, TestCase
 from django.urls import reverse
 
 from accounts.models import RequestLog
@@ -60,6 +60,7 @@ class PricingTests(TestCase):
         with self.settings(MODELMESH_INPUT_PRICE="3", MODELMESH_OUTPUT_PRICE="15"):
             self.assertEqual(estimate_cost("not-registered", 1_000_000, 0), Decimal("3"))
 
+    @override_settings(MODELMESH_ROUTER="accounts.services.default_router", MODELMESH_PROVIDER="mock")
     def test_mock_prompt_still_works(self):
         user = User.objects.create_user("u", password="pw-12345-long")
         log = run_prompt(user, "Hello there", source="playground")

@@ -8,5 +8,5 @@ urlpatterns = [
     path("", include("accounts.urls")),
     path("usage/", include("analytics.urls")),
     path("providers/", include("providers.urls")),
-    # Teammates add their apps here, e.g. path("providers/", include("providers.urls")),
+    path("routing/", include("router.urls")),
 ]

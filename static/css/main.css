@@ -122,3 +122,15 @@ progress { width: 100%; height: 12px; accent-color: var(--accent); }
 .model-row { border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1rem 0; margin: 0 0 1rem; }
 .model-row legend { font-weight: 600; padding: 0 .25rem; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Router: routing rules, explanation & feedback */
+.head-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.card.wide { max-width: 560px; }
+tr.chosen-row td { background: #eefaf3; }
+.small-print { font-size: .8rem; margin: .5rem 0 0; }
+.range-value { font-variant-numeric: tabular-nums; font-weight: 600; }
+.field input[type="radio"] { width: auto; }
+.feedback-form .field > div { display: flex; gap: .25rem 1rem; flex-wrap: wrap; }
+.feedback-form .field > div label { font-weight: 400; display: flex; gap: .35rem; align-items: center; }
+details { margin-top: 1rem; }
+summary { cursor: pointer; color: var(--accent); }

@@ -2,7 +2,7 @@
 
 Read this first. It records what each team member is building and how far each build has got. There is one status file per app. When you finish a task, tick it in your file and update its "Last updated" date.
 
-Last updated: 2026-11-08
+Last updated: 2026-11-09
 
 ## The project
 
@@ -12,9 +12,9 @@ ModelMesh is a Django 5.1 web app: an AI gateway that picks a model for each pro
 
 | App | Owner | Wireframe screens | Status | Details |
 |---|---|---|---|---|
-| `accounts` | Hriday Agarwal | 1–8 | Built in Part 1. P2-A3 integration and README work not started. | [hriday-accounts.md](hriday-accounts.md) |
-| `providers` | Omkar Chougule | 9–10 | Built and tested on `feature/providers`. PR ready. `docs/roadmap.md` drafted. | [omkar-providers.md](omkar-providers.md) |
-| `router` | Srinath Venkatesh | 11–12 | Not started | [srinath-router.md](srinath-router.md) |
+| `accounts` | Hriday Agarwal | 1–8 | All four apps merged into `main` and tested together. README updated. | [hriday-accounts.md](hriday-accounts.md) |
+| `providers` | Omkar Chougule | 9–10 | Merged into `main` (PR #3). `docs/roadmap.md` done. | [omkar-providers.md](omkar-providers.md) |
+| `router` | Srinath Venkatesh | 11–12 | Merged into `main` (PR #2). `docs/ai_plan.md` done. | [srinath-router.md](srinath-router.md) |
 | `analytics` | Manojkumar Mohankumar | 13–14 | First version merged into `main` (PR #1). | [manoj-analytics.md](manoj-analytics.md) |
 
 ## How the apps connect

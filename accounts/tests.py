@@ -228,3 +228,24 @@ class RealProviderTests(AccountsTestCase):
     def test_missing_model_shows_a_message(self):
         self.assertContains(self.send(), "No model is configured")
         self.create.assert_not_called()
+
+
+class ExplainLinkTests(AccountsTestCase):
+    """Pages in this app link to the router's explanation when a decision was saved."""
+
+    def setUp(self):
+        super().setUp()
+        self.log = RequestLog.objects.create(user=self.user, source="playground", prompt="hi", status="success")
+        self.client.force_login(self.user)
+
+    def detail(self):
+        return self.client.get(reverse("accounts:request_detail", args=[self.log.pk]))
+
+    def test_no_link_without_a_routing_decision(self):
+        self.assertNotContains(self.detail(), "Explain &amp; rate")
+
+    def test_link_when_the_router_decided(self):
+        from router.models import RoutingDecision
+
+        RoutingDecision.objects.create(request_log=self.log, category="chat", classifier_used="trained")
+        self.assertContains(self.detail(), reverse("router:explain", args=[self.log.pk]))

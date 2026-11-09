@@ -1,0 +1,589 @@
+prompt_id,model_id,score,good,reason
+P001,deepseek-v4-flash,10,1,Generates every combination in exactly the required order and passes all tests.
+P001,glm-5.3,9,1,Passes all tests with correct ordering; time complexity omits the factor for copying elements.
+P001,ornith-1.0-35b,4,0,Generates subsets but reverses required element ordering within combinations; fails all provided tests.
+P002,deepseek-v4-flash,10,1,Concise and correct substring search matching the reference.
+P002,glm-5.3,10,1,Correct substring search with short-circuiting; passes all tests.
+P002,ornith-1.0-35b,10,1,Correct implementation and explanation; passes all provided tests.
+P003,deepseek-v4-flash,10,1,Correct element-wise subtraction matching all tests and reference behavior.
+P003,glm-5.3,10,1,All implementations correctly subtract corresponding elements and pass the tests.
+P003,ornith-1.0-35b,10,1,Correct implementation with accurate explanation and linear time complexity.
+P004,deepseek-v4-flash,10,1,Concise implementation matching the reference and all tests.
+P004,glm-5.3,9,1,Both implementations work; claimed efficiency improvement overlooks slicing overhead and Python loop costs.
+P004,ornith-1.0-35b,10,1,Correctly returns the sum of minimum and maximum values.
+P005,deepseek-v4-flash,10,1,Correctly computes corresponding element maxima and preserves nested tuple structure.
+P005,glm-5.3,10,1,Correct implementation with accurate explanation and verification.
+P005,ornith-1.0-35b,10,1,Correct nested tuple maximization matching all tests.
+P006,deepseek-v4-flash,8,0,Passes provided tests but fails for unhashable list elements supported by the reference.
+P006,glm-5.3,9,1,Primary solution matches reference; alternative introduces an unstated hashability restriction.
+P006,ornith-1.0-35b,8,0,"Passes provided tests but requires hashable elements, unlike the reference."
+P007,deepseek-v4-flash,8,0,Passes provided tests but retains tabs and other whitespace excluded by reference.
+P007,glm-5.3,8,0,Passes provided tests but removes only spaces rather than all whitespace required by reference.
+P007,ornith-1.0-35b,4,0,Retains spaces and fails the first provided test.
+P008,deepseek-v4-flash,10,1,Correctly selects the shortest sublist using its length.
+P008,glm-5.3,10,1,Both implementations correctly select the shortest sublist and pass all tests.
+P008,ornith-1.0-35b,10,1,Concise implementation exactly matching reference behavior.
+P009,deepseek-v4-flash,6,0,Counts lists within tuples correctly but fails the explicitly provided standalone-list test.
+P009,glm-5.3,5,0,Fails the third test by returning zero; incorrectly claims it passes.
+P009,ornith-1.0-35b,9,1,Fallback passes all tests; final claim incorrectly suggests both versions pass the exact assertions.
+P010,deepseek-v4-flash,4,0,Counts uppercase characters correctly but fails two required tests and disagrees with reference.
+P010,glm-5.3,3,0,Fails two tests and falsely claims Y and D are not uppercase.
+P010,ornith-1.0-35b,5,0,Recognizes one inconsistent assertion but misses the second and does not satisfy required reference behavior.
+P011,deepseek-v4-flash,8,0,Passes supplied tests but excludes booleans and integer subclasses counted by the reference.
+P011,glm-5.3,8,0,Passes supplied tests but explicitly excludes booleans counted by the reference.
+P011,ornith-1.0-35b,9,1,Matches reference implementation; explanation inaccurately implies isinstance excludes all other types.
+P012,deepseek-v4-flash,10,1,Correct sphere volume formula with math imported; passes all supplied tests.
+P012,glm-5.3,10,1,Correct implementation and accurate verification of all supplied tests.
+P012,ornith-1.0-35b,10,1,Correct sphere volume formula with math imported; passes all supplied tests.
+P013,deepseek-v4-flash,10,1,Correctly returns the total number of opposing car pairs.
+P013,glm-5.3,10,1,Complete correct function with an accurate explanation of pairwise collisions.
+P013,ornith-1.0-35b,10,1,Complete function correctly returns n squared.
+P014,deepseek-v4-flash,10,1,Correctly returns the maximum list element using the built-in function.
+P014,glm-5.3,10,1,Correctly returns the maximum list element using the built-in function.
+P014,ornith-1.0-35b,10,1,Correctly returns the maximum list element using the built-in function.
+P015,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P015,glm-5.3,5,0,"Passes examples but Newton iteration cycles for valid input [2,-2,0,1], returning a nonroot."
+P015,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P016,deepseek-v4-flash,10,1,Correctly checks the Pythagorean relationship and rejects nonpositive side lengths.
+P016,glm-5.3,10,1,Correct implementation and explanation for triangle side lengths in any order.
+P016,ornith-1.0-35b,10,1,Correctly checks the Pythagorean relationship regardless of positive side ordering.
+P017,deepseek-v4-flash,10,1,"Complete function correctly returns string length, including zero for empty strings."
+P017,glm-5.3,10,1,"Complete function correctly returns string length, including zero for empty strings."
+P017,ornith-1.0-35b,10,1,"Complete function correctly returns string length, including zero for empty strings."
+P018,deepseek-v4-flash,10,1,Concise complete function correctly splits words on commas and whitespace.
+P018,glm-5.3,10,1,Correct implementation; redundant filtering does not affect results.
+P018,ornith-1.0-35b,10,1,"Correctly handles commas, whitespace, repeated separators, and empty strings."
+P019,deepseek-v4-flash,10,1,"Correct case-insensitive counting, terminal y handling, and additional executable examples."
+P019,glm-5.3,10,1,Correct vowel counting and terminal y handling with accurate examples.
+P019,ornith-1.0-35b,10,1,Correctly counts standard vowels and terminal y; safely handles empty strings.
+P020,deepseek-v4-flash,10,1,Correctly returns every most frequent letter and handles empty input.
+P020,glm-5.3,10,1,"Correct frequency counting, tie handling, and empty-input handling."
+P020,ornith-1.0-35b,10,1,Correctly returns all maximum-frequency letters with their counts.
+P021,deepseek-v4-flash,10,1,"Correctly handles empty dictionaries, nonstring keys, and uniform casing."
+P021,glm-5.3,10,1,"Correctly validates string keys, consistent casing, and empty dictionaries."
+P021,ornith-1.0-35b,7,0,Incorrectly accepts empty strings and keys containing only digits or punctuation.
+P022,deepseek-v4-flash,10,1,"Correctly returns the closest negative and positive integers, handling missing values."
+P022,glm-5.3,10,1,Correctly computes both extrema and returns None when either category is absent.
+P022,ornith-1.0-35b,10,1,Correct single-pass implementation handles zeros and absent positive or negative integers.
+P023,deepseek-v4-flash,10,1,"Correctly returns every prime strictly below n, including empty results."
+P023,glm-5.3,10,1,Correct implementation and explanation cover all provided examples.
+P023,ornith-1.0-35b,10,1,Complete implementation correctly checks primality and excludes the upper bound.
+P025,deepseek-v4-flash,10,1,"Generates normal samples, plots normalized histogram and fitted PDF, and returns Figure."
+P025,glm-5.3,10,1,"Correctly plots normalized histogram and sample-fitted normal PDF, returning Figure."
+P025,ornith-1.0-35b,9,1,Correct histogram and generating-distribution PDF; differs from the reference's sample-fitted PDF.
+P026,deepseek-v4-flash,10,1,"Correct validation, PCA transformation, and plotting, including single-component inputs."
+P026,glm-5.3,9,1,Correct PCA and plotting; single-component plot misleadingly labels constant zeros as Index.
+P026,ornith-1.0-35b,8,0,Works for multiple components but fails for valid n_components=1 by referencing missing PC2.
+P027,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P027,glm-5.3,7,0,Handles general segmentation correctly but violates the explicit unchanged-image requirement for one cluster.
+P027,ornith-1.0-35b,3,0,"Flat cluster labels incorrectly index a three-dimensional image, causing ordinary segmentation calls to fail."
+P028,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P028,glm-5.3,10,1,"Correctly generates sensor records, appends CSV data, deletes the file, and returns its path."
+P028,ornith-1.0-35b,10,1,"Creates, appends sensor data, deletes the file, and returns the requested path."
+P029,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P029,glm-5.3,6,0,Works for dictionary records but fails reference row-list inputs because column names are never assigned.
+P029,ornith-1.0-35b,4,0,Fails reference row-list inputs and skips negative-value validation for correctly capitalized column names.
+P030,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P030,glm-5.3,8,0,"Handles monitoring and timeout cleanup, but sums positive RSS deltas instead of reference RSS samples."
+P030,ornith-1.0-35b,4,0,"CPU metric is incorrect; missing files silently succeed, and initial process inspection can escape cleanup."
+P031,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P031,glm-5.3,7,0,"Compares against the current timestamp, incorrectly excluding today's date-only entries."
+P031,ornith-1.0-35b,4,0,Missing required imports; incorrectly keeps only today's rows instead of today and future dates.
+P032,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P032,glm-5.3,10,1,Correctly identifies outliers and returns their DataFrame with the properly labeled plot.
+P032,ornith-1.0-35b,10,1,Correctly identifies and plots outliers with all required labels and return values.
+P033,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P033,glm-5.3,7,0,Passing encoded bytes directly to json.loads fails for non-UTF target encodings containing non-ASCII characters.
+P033,ornith-1.0-35b,10,1,"Correctly handles empty content, encoding detection, exceptions, re-encoding, JSON parsing, and timeout."
+P034,deepseek-v4-flash,10,1,"Generates noisy sine data, fits using curve_fit, and returns the requested Axes."
+P034,glm-5.3,10,1,"Provides runnable code generating noisy sine data, fitting the curve, and returning the plot."
+P034,ornith-1.0-35b,10,1,Correctly generates noisy sine data and returns an Axes displaying data and fitted curve.
+P035,deepseek-v4-flash,10,1,Correct arithmetic and final balance of $12.
+P035,glm-5.3,10,1,Correctly calculates the bolt cost and remaining balance of $12.
+P035,ornith-1.0-35b,10,1,Correctly subtracts the $0.48 bolt cost from $12.48.
+P036,deepseek-v4-flash,10,1,Correct calculations yield seven more weeks.
+P036,glm-5.3,10,1,Correctly calculates $28 remaining and seven additional weeks.
+P036,ornith-1.0-35b,10,1,Correctly accounts for existing savings and calculates seven additional weeks.
+P037,deepseek-v4-flash,10,1,Correct arithmetic and final answer of three oranges.
+P037,glm-5.3,10,1,Correctly subtracts both children's allocations to obtain three oranges.
+P037,ornith-1.0-35b,10,1,Correctly calculates nine oranges distributed and three remaining.
+P038,deepseek-v4-flash,10,1,Provides the correct total expenditure; no explanation was required.
+P038,glm-5.3,10,1,Correctly totals goat and cow purchases to $4500.
+P038,ornith-1.0-35b,10,1,Correct purchase costs and total expenditure of $4500.
+P039,deepseek-v4-flash,10,1,"Correct consumption calculations, leftover accounting, and conversion to 12 gallons."
+P039,glm-5.3,10,1,Correctly includes leftover tea and converts 48 quarts to 12 gallons.
+P039,ornith-1.0-35b,10,1,Correctly calculates the initial volume as 12 gallons.
+P040,deepseek-v4-flash,10,1,Correctly accounts for all cube sizes and obtains two ounces remaining.
+P040,glm-5.3,10,1,Correctly calculates 30 ounces used and two ounces remaining.
+P040,ornith-1.0-35b,10,1,Correct water usage calculations and final answer of two ounces.
+P041,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P041,glm-5.3,4,0,"Trades small stickers for small buttons instead of specified large buttons, producing an incorrect total."
+P041,ornith-1.0-35b,10,1,Correctly applies all specified trades and totals 89 buttons.
+P042,deepseek-v4-flash,10,1,Correctly calculates 9 minutes using the blinking rate.
+P042,glm-5.3,10,1,Correct calculation and verification of 9 minutes.
+P042,ornith-1.0-35b,10,1,Correct rate calculation and final answer of 9 minutes.
+P043,deepseek-v4-flash,10,1,Correct cumulative payroll with a clearly distinguished alternative interpretation.
+P043,glm-5.3,10,1,"Correct monthly workforce counts and cumulative payroll of $2,880,000."
+P043,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P044,deepseek-v4-flash,10,1,Correctly divides $20 among four people.
+P044,glm-5.3,10,1,Correctly identifies four recipients and calculates $5 each.
+P044,ornith-1.0-35b,10,1,Correct answer and explanation accounting for Greg and his siblings.
+P045,deepseek-v4-flash,10,1,Correctly subtracts both shares to obtain 5 kilograms.
+P045,glm-5.3,10,1,Correct share calculations and remainder of 5 kilograms.
+P045,ornith-1.0-35b,10,1,Correctly reconciles names and calculates the remaining 5 kilograms.
+P046,deepseek-v4-flash,10,1,Correct cycle and remainder reasoning yield units digit 4.
+P046,glm-5.3,10,1,Correctly applies the four-term units digit cycle.
+P046,ornith-1.0-35b,10,1,Correct units digit cycle and alternative calculation establish 4.
+P047,deepseek-v4-flash,10,1,Correctly states five students; explanation was not required.
+P047,glm-5.3,10,1,"Correct inclusion-exclusion setup, solution, and check."
+P047,ornith-1.0-35b,10,1,Correct inclusion-exclusion calculation and verification.
+P048,deepseek-v4-flash,10,1,"Correct formula, substitution, and height of 5 centimeters."
+P048,glm-5.3,10,1,Correctly solves the cylinder volume equation for height.
+P048,ornith-1.0-35b,10,1,Correctly uses the radius and cylinder volume formula to obtain 5 centimeters.
+P049,deepseek-v4-flash,10,1,Correct unique solution; no explanation was requested.
+P049,glm-5.3,10,1,Correct algebra and substitution check establish the solution.
+P049,ornith-1.0-35b,10,1,Correctly solves and verifies the unique solution.
+P050,deepseek-v4-flash,10,1,Correct conjugate reasoning preserves the leading coefficient and obtains 10/11.
+P050,glm-5.3,9,1,"Correct ratio, but assumes a monic polynomial without explaining cancellation of the leading coefficient."
+P050,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P051,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P051,glm-5.3,9,1,"Correct minimum, but purported exhaustive enumeration duplicates routes and omits others."
+P051,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P052,deepseek-v4-flash,10,1,Correct base six equivalent stated directly.
+P052,glm-5.3,10,1,Correct conversion with accurate division steps and verification.
+P052,ornith-1.0-35b,10,1,Correct base six result with valid calculations and verification.
+P053,deepseek-v4-flash,10,1,Correctly simplifies to a decreasing function and obtains the minimum.
+P053,glm-5.3,10,1,"Correct simplification and minimization, supported by boundary checks and median reasoning."
+P053,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P054,deepseek-v4-flash,10,1,Correct substitution and arithmetic yield the required remainder.
+P054,glm-5.3,10,1,Correctly evaluates all terms and obtains remainder twelve.
+P054,ornith-1.0-35b,10,1,Correct application of the remainder theorem and cancellation of odd powers.
+P055,deepseek-v4-flash,10,1,"Correct inverse-mass ratio, simplified to the requested fraction."
+P055,glm-5.3,10,1,Correct reasoning and simplified acceleration ratio.
+P055,ornith-1.0-35b,10,1,Correct equal-force equation and acceleration ratio in lowest terms.
+P056,deepseek-v4-flash,10,1,Correct substitution and solution.
+P056,glm-5.3,10,1,Correct concise calculation of the requested coordinate.
+P056,ornith-1.0-35b,10,1,Correct substitution and algebra give b equal to zero.
+P057,deepseek-v4-flash,10,1,Correctly multiplies circumference by revolutions per second.
+P057,glm-5.3,10,1,Correct distance and time calculation yields the exact speed.
+P057,ornith-1.0-35b,10,1,Correct circumference and speed calculations with appropriate units.
+P059,deepseek-v4-flash,10,1,"Correct expansion, vertex calculation, and maximum value."
+P059,glm-5.3,10,1,Correctly identifies the maximizing vertex and evaluates the maximum.
+P059,ornith-1.0-35b,10,1,Both methods correctly establish the maximum value.
+P060,deepseek-v4-flash,10,1,Both real roots are correct and separated by commas as requested.
+P060,glm-5.3,10,1,"Correct substitution, algebra, denominator check, and comma-separated roots."
+P060,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P061,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P061,glm-5.3,7,0,"Correct probability and area calculation, but incorrectly identifies intersected edges and includes malformed mathematics."
+P061,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P062,deepseek-v4-flash,10,1,Correct convexity bounds identify eight sides and a valid missing angle.
+P062,glm-5.3,10,1,Correctly identifies the unique allowable angle sum and number of sides.
+P062,ornith-1.0-35b,10,1,Correct bounds and angle-sum calculations establish eight sides.
+P063,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P063,glm-5.3,2,0,"Drops the c from a+b+c, minimizing the wrong expression and obtaining an incorrect answer."
+P063,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P064,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P064,glm-5.3,10,1,Correctly enumerates all root mappings and identifies exactly six valid quadratics.
+P064,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P065,deepseek-v4-flash,10,1,Gives the correct final answer; no explanation was required.
+P065,glm-5.3,10,1,"Correct rotation formula, calculations, and final answer."
+P065,ornith-1.0-35b,10,1,"Correctly translates, rotates counterclockwise, and translates back to obtain 6-5i."
+P066,deepseek-v4-flash,10,1,Correct calculation and final answer expressed to the nearest hundredth.
+P066,glm-5.3,10,1,"Correctly combines displacements and applies the Pythagorean theorem, giving the requested decimal."
+P066,ornith-1.0-35b,10,1,"Correct displacement analysis and distance, expressed in the requested decimal format."
+P067,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P067,glm-5.3,10,1,Correctly totals nine straight segments and circular arcs to obtain 18+2π.
+P067,ornith-1.0-35b,1,0,auto: no answer (thinking budget)
+P068,deepseek-v4-flash,10,1,"Accurately summarizes the revamped website, committee oversight, and public engagement purpose in one sentence."
+P068,glm-5.3,10,1,"Accurately covers the launch, governance, eligibility, and signature thresholds in one sentence."
+P068,ornith-1.0-35b,10,1,"Clearly captures the website launch, petition participation, committee review, and engagement objectives."
+P069,deepseek-v4-flash,10,1,Concisely captures the economic benefits and need for future branding beyond the show.
+P069,glm-5.3,10,1,"Accurately summarizes tourism benefits, temporary popularity, stereotypes, and planning for sustainable appeal."
+P069,ornith-1.0-35b,9,1,"Accurately captures the central concern, but changes one planned meeting into multiple meetings."
+P070,deepseek-v4-flash,10,1,Accurately captures the central announcement and names the other judges in one sentence.
+P070,glm-5.3,10,1,"Correctly identifies Jones's return, the ITV transition, timing, and fellow coaches."
+P070,ornith-1.0-35b,10,1,Accurately summarizes Jones's return after BBC dismissal and the ITV coaching lineup.
+P071,deepseek-v4-flash,8,0,Mischaracterizes Shatter's vindication over complaint handling as specifically being cleared of corruption.
+P071,glm-5.3,10,1,"Accurately balances investigative failures, McCabe's legitimate concerns, and findings clearing Callinan and Shatter."
+P071,ornith-1.0-35b,7,0,"Omits Alan Shatter's exoneration, a central finding, while accurately highlighting investigative failures."
+P072,deepseek-v4-flash,9,1,"Mostly accurate, but first mid-air interceptions is broader than the reported first mid-air attacks."
+P072,glm-5.3,10,1,"Accurately summarizes both shootdowns, suspected trafficking, the new law, and the intensified crackdown."
+P072,ornith-1.0-35b,8,0,"Presents suspected drug smuggling as established fact, though the main events are accurately summarized."
+P073,deepseek-v4-flash,8,0,"Captures the main transaction but omits patent counts, licensing arrangements, and defensive purpose."
+P073,glm-5.3,9,1,Accurately summarizes the patent sale and Facebook's legal and financial context in one sentence.
+P073,ornith-1.0-35b,9,1,"Captures the sale, licensing arrangement, strategic purpose, and financial context in one sentence."
+P074,deepseek-v4-flash,10,1,Accurately connects Peterborough Cathedral's festival with Katharine's burial and the history of her tomb.
+P074,glm-5.3,9,1,"Accurately summarizes the annual commemoration, location, and historical context."
+P074,ornith-1.0-35b,7,0,Misleadingly presents the annual festival as part of the BBC documentary.
+P075,deepseek-v4-flash,9,1,"Captures the sentence, evacuation, and lifesaving history but leaves the threat's nature unspecified."
+P075,glm-5.3,10,1,"Accurately covers the bomb threat, evacuation, sentence, and sheriff's explanation."
+P075,ornith-1.0-35b,9,1,"Accurately identifies the offender, sentence, threat, and motive but omits the evacuation."
+P076,deepseek-v4-flash,7,0,"Identifies the appointment but omits Fox News, the main network highlighted by the reference."
+P076,glm-5.3,10,1,"Accurately identifies both networks, the new contributor role, and relevant political and broadcasting context."
+P076,ornith-1.0-35b,7,0,Omits the principal Fox News appointment and mentions only Fox Business.
+P077,deepseek-v4-flash,9,1,"Accurately captures the retained force, counterterrorism mission, delayed withdrawal, and understaffed UN deployment."
+P077,glm-5.3,10,1,"Clearly summarizes the minister's announcement, remaining troop strength, withdrawal, and cooperation with Minusma."
+P077,ornith-1.0-35b,9,1,"Accurately summarizes the remaining force and mission, though withdrawal timing is slightly imprecise."
+P078,deepseek-v4-flash,9,1,Accurately identifies Knox's Masters debut and planned practice with former champion Sandy Lyle.
+P078,glm-5.3,10,1,"Captures Knox's debut, recent success, and intention to learn from Sandy Lyle."
+P078,ornith-1.0-35b,5,0,Incorrectly names the central golfer Grant Knox rather than Russell Knox.
+P079,deepseek-v4-flash,9,1,"Covers the main findings in three sentences, though pet preference slightly overinterprets separate percentages."
+P079,glm-5.3,10,1,"Accurately covers pet preferences, blended families, and continuing family priorities in three sentences."
+P079,ornith-1.0-35b,9,1,"Captures the main findings and enduring values, but implies an unestablished shift in pet preferences."
+P080,deepseek-v4-flash,9,1,Accurately summarizes the conflict and consequences but states the alleged trigger as established fact.
+P080,glm-5.3,9,1,"Accurately covers the trigger, violence, injuries, and arrests; slightly understates estimated damage."
+P080,ornith-1.0-35b,7,0,Incorrectly reports four injured people; the article identifies four security guards and a police officer.
+P081,deepseek-v4-flash,10,1,"Accurately summarizes the alleged ceremony, welfare check, child removals, and uncertainty surrounding the death."
+P081,glm-5.3,9,1,"Accurately summarizes the allegations and investigation, but treats the ceremony date as the death date."
+P081,ornith-1.0-35b,6,0,Invents a causal link to child removals and attributes unconfirmed death reports to neighbors.
+P082,deepseek-v4-flash,9,1,"Accurately covers the service, themed settings, and physical attendance requirement; omits virtual guest avatars."
+P082,glm-5.3,9,1,"Accurately covers remote participation, themed venues, Facebook access, and conditions for a legally binding ceremony."
+P082,ornith-1.0-35b,9,1,"Accurately explains participation and legal conditions, though cost and stress reductions are presented too definitively."
+P083,deepseek-v4-flash,9,1,"Accurately captures popularity, sales, and therapeutic appeal but omits the trend's French origins."
+P083,glm-5.3,9,1,"Accurate three-sentence summary, but New York colouring groups are not explicitly established."
+P083,ornith-1.0-35b,7,0,Overstates sales as multimillion and presents the sequel's anticipated success as already achieved.
+P084,deepseek-v4-flash,9,1,"Accurate and concise, covering casting demands, yoga requirements, and unequal pay."
+P084,glm-5.3,10,1,"Comprehensively captures the detailed casting requirements, advanced yoga skills, and pay disparity."
+P084,ornith-1.0-35b,8,0,Adds unsupported marketing interpretation and locates auditions in London when only filming location is specified.
+P085,deepseek-v4-flash,9,1,"Strong summary, though access to Indian markets is presented more definitively than the article."
+P085,glm-5.3,10,1,"Accurately summarizes the proposed route, completion target, Indian concerns, and environmental criticism."
+P085,ornith-1.0-35b,9,1,Accurately covers the proposed railway and geopolitical concerns but omits the 2020 target.
+P086,deepseek-v4-flash,10,1,Accurately attributes Hopkins's claims and covers the backlash and shipwreck timing.
+P086,glm-5.3,10,1,"Faithfully summarizes Hopkins's remarks, the deadly shipwreck, and the substantial petition response."
+P086,ornith-1.0-35b,9,1,"Captures the controversy and petition accurately, though social justice groups' condemnation is not explicitly documented."
+P087,deepseek-v4-flash,10,1,"Accurately summarizes the dispute, judicial reasoning, and costs order in three sentences."
+P087,glm-5.3,8,0,Misattributes the couple's claim about a glimpse of ocean to the judge's ruling.
+P087,ornith-1.0-35b,10,1,Clearly distinguishes the parties' arguments and accurately reports the judgment and legal costs.
+P088,deepseek-v4-flash,9,1,"Accurate three-sentence summary, though it omits the research subject and fine amount."
+P088,glm-5.3,10,1,"Accurately covers the visa penalty, unsupported spying allegations, academic context, and diplomatic tensions."
+P088,ornith-1.0-35b,7,0,Mislabels Russian media as state media and turns offered consular support into confirmed assistance.
+P089,deepseek-v4-flash,10,1,"Concisely and accurately captures the discrimination allegation, weight loss, damages sought, and university response."
+P089,glm-5.3,8,0,"Mostly accurate, but wording attributes health issues to audition denial rather than rapid weight loss."
+P089,ornith-1.0-35b,6,0,Misrepresents chronology by implying she lost 60 pounds before the documented audition refusal.
+P090,deepseek-v4-flash,10,1,"Accurately summarizes polling, the proposed political bargain, and both leaders' opposing financial arguments."
+P090,glm-5.3,10,1,"Accurately covers polling, Sturgeon's conditions, spending proposals, and Miliband's financial criticism."
+P090,ornith-1.0-35b,8,0,"Omits full fiscal autonomy, the central condition behind Sturgeon's offer and Miliband's financial criticism."
+P091,deepseek-v4-flash,10,1,"Accurately summarizes the deception, evidence of intent, arrest, sentence, and prevention order."
+P091,glm-5.3,9,1,"Mostly accurate, but obscures that Adeli initiated the sexual conversations."
+P091,ornith-1.0-35b,10,1,"Accurately captures the vigilante operation, arrest, guilty plea, prison sentence, and prevention order."
+P092,deepseek-v4-flash,9,1,"Accurate core summary, but does not distinguish the additional year imposed for separate drug offenses."
+P092,glm-5.3,10,1,"Accurately covers the fatal driving, attempted evasion, guilty plea, and precise sentence breakdown."
+P092,ornith-1.0-35b,8,0,Misattributes the family's heartless description to the judge and obscures the separate drug sentence.
+P093,deepseek-v4-flash,10,1,"Accurately summarizes the accusations, charges, attempted insanity plea, detention, and discovery in three sentences."
+P093,glm-5.3,9,1,"Comprehensive and accurate, but slightly embellishes the judge's explanation for preventing the plea."
+P093,ornith-1.0-35b,8,0,Captures central facts but incorrectly places the probable-cause hearing in late April.
+P094,deepseek-v4-flash,10,1,"Accurately covers the allegations, comparison, and expert commentary in three sentences."
+P094,glm-5.3,9,1,"Accurate three-sentence summary, with an unnecessary introductory line."
+P094,ornith-1.0-35b,8,0,Introduces unsupported repeated apologies and presents alleged cheating too definitively.
+P095,deepseek-v4-flash,10,1,"Concise, accurate summary covering the incident, investigation, disputed intent, and public response."
+P095,glm-5.3,10,1,"Accurately summarizes police questioning, the disputed collision, injuries, and fundraising."
+P095,ornith-1.0-35b,10,1,"Clearly captures the injuries, competing account, public reaction, and police investigation."
+P096,deepseek-v4-flash,9,1,"Accurate overall, but converts average disengagement after twenty minutes into a claim about most workers."
+P096,glm-5.3,9,1,"Strong summary, but presents average maximum travel distance as an overall upper limit."
+P096,ornith-1.0-35b,8,0,Conflates the seventy-percent disengagement statistic with average timing and exaggerates respondents' and experts' statements.
+P097,deepseek-v4-flash,10,1,"Accurately captures the scheme, distinct convictions, fatal attack, and sentencing date."
+P097,glm-5.3,10,1,"Accurate three-sentence account explaining the deception, attack, convictions, and scheduled sentencing."
+P097,ornith-1.0-35b,10,1,"Faithfully summarizes the robbery scheme, fatal assault, and different convictions."
+P098,deepseek-v4-flash,10,1,"Accurately summarizes preliminary treatment findings, planned trials, and the article's separate fasting study."
+P098,glm-5.3,10,1,"Accurately explains the combination, mechanism, preliminary evidence, and planned clinical trial."
+P098,ornith-1.0-35b,7,0,Overstates preliminary findings by claiming cell elimination and significant reductions in recurrence and spread.
+P099,deepseek-v4-flash,9,1,"Accurate overall, but describes Galloway's announced future appointment as already completed."
+P099,glm-5.3,9,1,"Accurate overall, but insufficiently attributes the suggested spontaneity and contributing stresses to Schweich's wife."
+P099,ornith-1.0-35b,9,1,"Captures key findings and succession plans, but slightly distorts the timing of Schweich's statement."
+P100,deepseek-v4-flash,10,1,Faithfully summarizes the central exchange and both the mother's and UKIP's responses.
+P100,glm-5.3,10,1,"Accurately covers the exchange, mother's response, and UKIP's position in three sentences."
+P100,ornith-1.0-35b,8,0,Recasts the mother's remarks as explicitly about racism and treats her speculation as established fact.
+P101,deepseek-v4-flash,10,1,Correct shortest exact answer from the passage.
+P101,glm-5.3,9,1,"Correct exact answer, but longer than the requested shortest answer."
+P101,ornith-1.0-35b,10,1,Correct shortest exact answer from the passage.
+P102,deepseek-v4-flash,10,1,Correct shortest exact answer from the passage.
+P102,glm-5.3,10,1,Correct shortest exact answer from the passage.
+P102,ornith-1.0-35b,10,1,Correct shortest exact answer from the passage.
+P103,deepseek-v4-flash,10,1,Correct owner in the shortest exact form.
+P103,glm-5.3,8,0,"Correct owner, but includes unnecessary company information despite the shortest-answer instruction."
+P103,ornith-1.0-35b,10,1,Correct owner in the shortest exact form.
+P104,deepseek-v4-flash,10,1,Exact GDP figure and currency match the passage and reference.
+P104,glm-5.3,10,1,Exact GDP figure and currency match the passage and reference.
+P104,ornith-1.0-35b,10,1,Exact GDP figure and currency match the passage and reference.
+P105,deepseek-v4-flash,9,1,"Correct year, but 'until' is unnecessary under the shortest-answer instruction."
+P105,glm-5.3,10,1,"Correct scheduled departure year, matching an accepted answer."
+P105,ornith-1.0-35b,9,1,"Correct year, but 'until' is unnecessary under the shortest-answer instruction."
+P106,deepseek-v4-flash,10,1,"Correct year, stated exactly and concisely."
+P106,glm-5.3,10,1,"Correct year, stated exactly and concisely."
+P106,ornith-1.0-35b,10,1,"Correct year, stated exactly and concisely."
+P107,deepseek-v4-flash,10,1,"Correct original name, quoted exactly from the passage."
+P107,glm-5.3,10,1,"Correct original name, quoted exactly from the passage."
+P107,ornith-1.0-35b,10,1,"Correct original name, quoted exactly from the passage."
+P108,deepseek-v4-flash,10,1,Concise exact phrase matching an accepted answer.
+P108,glm-5.3,7,0,"Correct description, but includes substantial unnecessary context despite the shortest-answer instruction."
+P108,ornith-1.0-35b,9,1,"Correct description, but the article is unnecessary."
+P109,deepseek-v4-flash,10,1,Correct system name in the shortest exact form.
+P109,glm-5.3,10,1,Correct system name in the shortest exact form.
+P109,ornith-1.0-35b,10,1,Correct system name in the shortest exact form.
+P110,deepseek-v4-flash,10,1,"Correct person, stated exactly and concisely."
+P110,glm-5.3,10,1,"Correct person, stated exactly and concisely."
+P110,ornith-1.0-35b,10,1,"Correct person, stated exactly and concisely."
+P111,deepseek-v4-flash,4,0,Lists fellow stakeholders instead of identifying Freeview or ITV Digital as required.
+P111,glm-5.3,4,0,Lists fellow stakeholders instead of identifying Freeview or ITV Digital as required.
+P111,ornith-1.0-35b,4,0,Lists fellow stakeholders instead of identifying Freeview or ITV Digital as required.
+P112,deepseek-v4-flash,10,1,Correctly lists all four official languages; additional language descriptions are accurate.
+P112,glm-5.3,10,1,Correctly lists all four official languages; additional context agrees with the passage.
+P112,ornith-1.0-35b,10,1,Correctly lists all four official languages and accurately identifies the lingua franca.
+P113,deepseek-v4-flash,10,1,Correctly expands IIT.
+P113,glm-5.3,10,1,Correct expansion with accurate supporting context.
+P113,ornith-1.0-35b,10,1,Correctly expands IIT using the provided text.
+P114,deepseek-v4-flash,10,1,Complete alphabetical list; correctly includes Oʻahu despite its omission from the reference.
+P114,glm-5.3,10,1,Correctly lists all eight islands alphabetically; reference mistakenly omits Oʻahu.
+P114,ornith-1.0-35b,10,1,All eight islands appear in correct alphabetical order.
+P115,deepseek-v4-flash,10,1,Accurately extracts all nine markets and earnings in descending order.
+P115,glm-5.3,10,1,All markets and earnings match the passage in the requested order.
+P115,ornith-1.0-35b,10,1,Complete and accurate extraction with correct descending ordering.
+P116,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P116,glm-5.3,4,0,Includes numerous incorrect credits and dates; also misidentifies Koel as his son.
+P116,ornith-1.0-35b,10,1,"Lists every film mentioned; correctly excludes Sheriff of Kolkata, an office rather than film."
+P117,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P117,glm-5.3,8,0,"Correct titles, but overstates Ishihara's role in Season of the Sun."
+P117,ornith-1.0-35b,7,0,"Correct films, but falsely attributes both to director Koreyoshi Kurahara."
+P118,deepseek-v4-flash,7,0,Includes the expected inflation-adjusted leader but foregrounds an unsupported nominal ranking and omits adjusted earnings.
+P118,glm-5.3,6,0,"Correct adjusted answer, but invents passage support for Inside Out 2 and misstates animation exceptions."
+P118,ornith-1.0-35b,7,0,Identifies the inflation-adjusted leader but adds an unreliable nominal ranking and omits the provided gross.
+P119,deepseek-v4-flash,10,1,Accurately lists and ranks every quantified risk factor.
+P119,glm-5.3,10,1,"Complete, accurate ranking with the equal contributions explicitly marked as tied."
+P119,ornith-1.0-35b,8,0,"Correct extraction and ranking, but falsely claims percentages exceed 100%; they total 92%."
+P120,deepseek-v4-flash,10,1,Accurately extracts all four tournaments and their months using bullets.
+P120,glm-5.3,10,1,Correct tournament names and months in the requested bullet format.
+P120,ornith-1.0-35b,10,1,Complete and accurate bullet list matching the passage.
+P121,deepseek-v4-flash,8,0,"Correct brand list, but overstates controlling ownership, notably for Proton."
+P121,glm-5.3,10,1,Comprehensive passage-based list with Aston Martin's minority investment clearly distinguished.
+P121,ornith-1.0-35b,10,1,Accurately organizes the passage's brands and distinguishes Aston Martin's minority stake.
+P122,deepseek-v4-flash,8,0,Correct comma-separated branch and subsidiary locations; omits four representative-office locations expected by the reference.
+P122,glm-5.3,7,0,Omits reference-expected representative offices and adds unnecessary sections beyond the requested comma-separated output.
+P122,ornith-1.0-35b,8,0,"Correct branch and subsidiary extraction, but excludes representative-office locations included in the reference."
+P123,deepseek-v4-flash,10,1,Correct difference of 1242000 members.
+P123,glm-5.3,10,1,Correct difference of 1242000 members.
+P123,ornith-1.0-35b,10,1,Correct difference of 1242000 members.
+P124,deepseek-v4-flash,3,0,Three months fits passage dates but conflicts with the required benchmark answers.
+P124,glm-5.3,3,0,Conflicts with accepted benchmark answers and adds explanation despite final-answer-only instruction.
+P124,ornith-1.0-35b,3,0,Three months fits passage dates but conflicts with the required benchmark answers.
+P125,deepseek-v4-flash,10,1,Correctly counts three field goals over 40 yards.
+P125,glm-5.3,10,1,Correctly counts three field goals over 40 yards.
+P125,ornith-1.0-35b,10,1,Correctly counts three field goals over 40 yards.
+P126,deepseek-v4-flash,10,1,Correct complement of 6.7 percent.
+P126,glm-5.3,10,1,Correct complement of 6.7 percent.
+P126,ornith-1.0-35b,10,1,Correct complement of 6.7 percent.
+P127,deepseek-v4-flash,10,1,Correct complement of 7.9 percent.
+P127,glm-5.3,10,1,Correct complement of 7.9 percent.
+P127,ornith-1.0-35b,10,1,Correct complement of 7.9 percent.
+P128,deepseek-v4-flash,10,1,Correctly identifies the shortest field goal as 26 yards.
+P128,glm-5.3,10,1,Correctly identifies the shortest field goal as 26 yards.
+P128,ornith-1.0-35b,10,1,Correctly identifies the shortest field goal as 26 yards.
+P129,deepseek-v4-flash,10,1,Correctly subtracts housing units from population.
+P129,glm-5.3,10,1,Correctly subtracts housing units from population.
+P129,ornith-1.0-35b,10,1,Correctly subtracts housing units from population.
+P130,deepseek-v4-flash,10,1,Correct remaining percentage after subtracting all listed age groups from 100.
+P130,glm-5.3,2,0,Incorrectly subtracts ages 15–19 from under-18 population; also violates final-answer-only instruction.
+P130,ornith-1.0-35b,3,0,Incorrect percentage; the listed age groups leave 5.6 percent under five.
+P131,deepseek-v4-flash,10,1,Correct complement of the Spanish-speaking percentage.
+P131,glm-5.3,10,1,Correct complement of the Spanish-speaking percentage.
+P131,ornith-1.0-35b,10,1,Correct complement of the Spanish-speaking percentage.
+P132,deepseek-v4-flash,10,1,Correctly identifies Flacco's 62-yard touchdown pass.
+P132,glm-5.3,10,1,Correctly identifies Flacco's 62-yard touchdown pass.
+P132,ornith-1.0-35b,10,1,Correctly identifies Flacco's 62-yard touchdown pass.
+P133,deepseek-v4-flash,10,1,"Correct longest field goal, with no unnecessary explanation."
+P133,glm-5.3,10,1,Exactly matches the accepted answer.
+P133,ornith-1.0-35b,10,1,"Correct longest field goal, stated concisely."
+P134,deepseek-v4-flash,10,1,"Convincing diary captures selective affection, separation distress, and joyful reunion."
+P134,glm-5.3,10,1,Distinctive humorous dog voice clearly conveys exclusive attachment and an entire day of waiting.
+P134,ornith-1.0-35b,8,0,"Vivid dog perspective, but inconsistent pronouns and actions occasionally undermine narrative clarity."
+P135,deepseek-v4-flash,9,1,"Strong song structure and summer imagery, with a few strained lyrical expressions."
+P135,glm-5.3,9,1,Complete song with memorable chorus and coherent seasonal romance; occasional awkward phrasing.
+P135,ornith-1.0-35b,7,0,"Complete summer romance song, but forced metaphors and awkward lines weaken singability."
+P136,deepseek-v4-flash,9,1,"Detailed and coherent learning narrative, though the bell-removal exchange feels unmotivated."
+P136,glm-5.3,10,1,"Clear first-person passage traces setbacks, practical learning, and a satisfying breakthrough."
+P136,ornith-1.0-35b,9,1,"Vivid first-person account conveys practice, fear, and eventual independent riding."
+P137,deepseek-v4-flash,7,0,"Persuasive short passage, but incorrectly names Rod Woodland among Steelers legends."
+P137,glm-5.3,7,0,"Relevant historical reasons, but exceeds requested brevity and exaggerates fanbase claims."
+P137,ornith-1.0-35b,4,0,Relevant enthusiasm undermined by fabricated fan traditions and several nonsensical factual claims.
+P138,deepseek-v4-flash,8,0,"Covers requested elements, but contradicts pre-order status with general availability and overstates thermal imaging."
+P138,glm-5.3,9,1,"Well-structured fictional press release clearly announces availability, five cuisines, and advanced features."
+P138,ornith-1.0-35b,7,0,"Includes required announcement, cuisines, and technology, but contains nonsensical specifications and inconsistent availability."
+P139,deepseek-v4-flash,10,1,"Professional usable letter identifies two leaks, requests warranty service, and specifies a 30-day response."
+P139,glm-5.3,9,1,"Clear warranty claim and response deadline, with minor unnecessary assumptions and supplementary advice."
+P139,ornith-1.0-35b,9,1,Complete warranty letter with explicit deadline; additional advice unnecessarily complicates the requested deliverable.
+P140,deepseek-v4-flash,10,1,"Concise believable negative review from a parent, focused on waiting-room cleanliness."
+P140,glm-5.3,9,1,Strong maternal voice and specific cleanliness complaints; somewhat exaggerated but fully responsive.
+P140,ornith-1.0-35b,7,0,"Clearly fulfills the premise, but contradictory update and implausible descriptions undermine credibility."
+P141,deepseek-v4-flash,10,1,Directly depicts using AI while maintaining the five-seven-five syllable structure.
+P141,glm-5.3,10,1,Evocative AI-themed haiku with correct five-seven-five syllable structure.
+P141,ornith-1.0-35b,10,1,Correct five-seven-five structure and clear imagery about interacting with AI.
+P142,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P142,glm-5.3,8,0,"Engaging character and narrative arc, but the rescue mechanism and final explanation lack clarity."
+P142,ornith-1.0-35b,9,1,Atmospheric complete story with engaging imagery and a coherent theme of shared remembrance.
+P143,deepseek-v4-flash,10,1,"Natural conversation clearly explores personal and societal benefits and drawbacks, with realistic coping strategies."
+P143,glm-5.3,10,1,"Engaging dialogue naturally balances personal experiences with social benefits, harms, and practical boundaries."
+P143,ornith-1.0-35b,8,0,"Thorough and vivid dialogue, but some claims and the dental analogy undermine credibility."
+P144,deepseek-v4-flash,8,0,"Concise, relevant, and consistently rhyming; 'memories worn and happy proud' is awkward."
+P144,glm-5.3,8,0,"Appropriate rhyming toast with warm sentiment, though forced phrasing and enjambment weaken its flow."
+P144,ornith-1.0-35b,7,0,"Warm reunion toast, but several rhymes fail and some phrasing is awkward."
+P145,deepseek-v4-flash,7,0,"Rich imagery and memorable characterization, but two paragraphs violate the requested limit."
+P145,glm-5.3,7,0,"Vivid, distinctive characterization, but two paragraphs violate the explicit fewer-than-two requirement."
+P145,ornith-1.0-35b,10,1,"Inventive, vivid character description with strong sensory imagery, delivered in one paragraph."
+P146,deepseek-v4-flash,9,1,Evocative single-paragraph opening with mystery and temporal agency; waking is implied rather than stated.
+P146,glm-5.3,10,1,"Compelling opening combines waking, apparent time travel, emotional stakes, and an effective narrative hook."
+P146,ornith-1.0-35b,9,1,"Intriguing single-paragraph opening explicitly connects waking with temporal powers, though discovery feels unusually immediate."
+P147,deepseek-v4-flash,10,1,"Professional, concise email explicitly requests feedback on all three specified areas."
+P147,glm-5.3,9,1,"Covers every requested area professionally, but added formalities make it somewhat longer than necessary."
+P147,ornith-1.0-35b,10,1,"Clear professional email requests targeted feedback on analysis, presentation, and conclusions without unnecessary detail."
+P148,deepseek-v4-flash,9,1,"Accessible explanation correctly distinguishes self-supervised pretraining from labeled refinement, though prediction objectives are somewhat conflated."
+P148,glm-5.3,9,1,"Clear examples accurately explain self-supervised learning and labeled refinement, with minor overgeneralization about training stages."
+P148,ornith-1.0-35b,6,0,Explains training stages clearly but overpromises reliability and misleadingly dismisses models trained on labeled data.
+P149,deepseek-v4-flash,9,1,"Provides actionable communication techniques, concrete examples, and useful questions for tailoring further guidance."
+P149,glm-5.3,8,0,"Practical communication guidance and relevant questions, but assuming good intent and deeper causes overgeneralizes."
+P149,ornith-1.0-35b,7,0,"Useful questions and repair strategies, but recommending couples therapy for intimidation or control is problematic."
+P150,deepseek-v4-flash,7,0,"Captures the requested voice and rationale, but presents terraforming feasibility and technical readiness too confidently."
+P150,glm-5.3,7,0,"Convincing voice and clear rationale, but misstates lunar resources and oversimplifies oxygen production."
+P150,ornith-1.0-35b,8,0,"Strong persona and coherent survival argument, though settlement engineering feasibility is presented with excessive certainty."
+P151,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P151,glm-5.3,8,0,"Useful triage and diagnostic questions, but severe pain alone warrants stronger urgency and herbal claims overgeneralize."
+P151,ornith-1.0-35b,8,0,"Prioritizes evaluation and gathers relevant history, but broad herbal claims lack evidence and interaction detail."
+P152,deepseek-v4-flash,8,0,"Emotionally vivid tree perspective, but 'centuries of seasons' contradicts the specified hundred-year age."
+P152,glm-5.3,9,1,Powerful first-person imagery conveys grief and helplessness; the closing commentary unnecessarily breaks immersion.
+P152,ornith-1.0-35b,8,0,"Immersive emotional perspective, though repetitive imagery and assumed post-felling regeneration weaken the deforestation scenario."
+P153,deepseek-v4-flash,10,1,"Concise model-specific outline thoroughly covers features, performance, user experience, and purchasing priorities."
+P153,glm-5.3,8,0,Strong comparison structure but incorrectly implies the S24 Ultra uses an armor aluminum frame.
+P153,ornith-1.0-35b,9,1,Clear comprehensive outline within length limit; unnamed models make the comparison less concrete.
+P154,deepseek-v4-flash,9,1,Concise and convincingly cocky; answers directly while maintaining the requested persona.
+P154,glm-5.3,9,1,"Engaging Stark characterization, though it conflates details from two different press conferences."
+P154,ornith-1.0-35b,10,1,"Maintains Stark's wit, technical confidence, and reflective personality while directly answering the question."
+P155,deepseek-v4-flash,5,0,Provides four catchy options but invents discovery details and overstates ethical benefits.
+P155,glm-5.3,6,0,Addresses ethical tradeoffs thoughtfully but invents doubled output and other unsupported discovery claims.
+P155,ornith-1.0-35b,4,0,"Offers adaptable templates but makes unsupported carbon-negative, record-yield, and food-security claims."
+P156,deepseek-v4-flash,10,1,"Evocative Irish imagery with correct haiku structure, lowercase text, title formatting, and sufficient g occurrences."
+P156,glm-5.3,10,1,Restrained nature imagery and correct syllables satisfy the requested style and all explicit constraints.
+P156,ornith-1.0-35b,10,1,"Effective nature haiku with correct syllables, lowercase formatting, bracketed title, and sufficient g occurrences."
+P157,deepseek-v4-flash,10,1,Correct grammatical assessment and explanation in exactly six uppercase sentences.
+P157,glm-5.3,9,1,"Correct conclusion and formatting, but rooms is the preposition's object rather than the verb's."
+P157,ornith-1.0-35b,8,0,"Meets formatting requirements and reaches the correct conclusion, but grammatical explanation is imprecise."
+P158,deepseek-v4-flash,8,0,Meets structural constraints but adds awkward imagery and unsupported details beyond the original meaning.
+P158,glm-5.3,9,1,"Preserves the central meaning and satisfies paragraph, placeholder, and punctuation requirements."
+P158,ornith-1.0-35b,6,0,Meets explicit formatting constraints but introduces confusing imagery and awkward claims about seizing crimes.
+P159,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P159,glm-5.3,8,0,"Comprehensive and correctly formatted, though the Meigs-like explanation of malignant pleural effusion is misleading."
+P159,ornith-1.0-35b,7,0,"Meets all formatting requirements and covers core symptoms, but includes atypical signs and overstated mechanisms."
+P160,deepseek-v4-flash,8,0,Well-structured resume satisfies capitalization and quotation constraints but presents invented credentials without qualification.
+P160,glm-5.3,5,0,Provides a detailed resume but substantially exceeds the uppercase-word limit and invents personal details.
+P160,ornith-1.0-35b,8,0,Polished resume meets capitalization and quotation requirements but presents invented employment and education as factual.
+P161,deepseek-v4-flash,10,1,"Correct, concise explanation satisfying uppercase, punctuation, and sentence-count requirements."
+P161,glm-5.3,10,1,Correct choice with sound ecological reasoning and full compliance with formatting constraints.
+P161,ornith-1.0-35b,8,0,"Correct choice and formatting, but sustainability cannot guarantee healthy ecosystem functioning for centuries."
+P162,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P162,glm-5.3,10,1,"Coherent humorous escalation with sufficient sentences, italicized sections, and enclosing quotation marks."
+P162,ornith-1.0-35b,8,0,"Meets every formatting constraint, though the punchline and audience reaction are weakly connected."
+P163,deepseek-v4-flash,9,1,Thirty lowercase sentences with imaginative weirdness; tweet boundaries could be clearer.
+P163,glm-5.3,5,0,Weird and engaging but includes capitals and far exceeds thirty sentences.
+P163,ornith-1.0-35b,10,1,Delivers twenty-four lowercase sentences in a suitably weird tweet thread.
+P164,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P164,glm-5.3,9,1,Meets formatting and length requirements with seven relevant days; some activities require advance arrangements.
+P164,ornith-1.0-35b,8,0,Meets explicit constraints but proposes vague events and an overly ambitious travel route.
+P165,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P165,glm-5.3,9,1,"Exceeds nine hundred words, avoids forbidden words, ends correctly, and clearly supports choosing parks."
+P165,ornith-1.0-35b,7,0,Meets explicit constraints but includes unsupported historical claims and overconfident generalizations.
+P166,deepseek-v4-flash,10,1,Evocative imagery with exactly thirty properly punctuated lines and no commas.
+P166,glm-5.3,10,1,"Cohesive poem satisfying every line, sentence, punctuation, and formatting requirement."
+P166,ornith-1.0-35b,10,1,Exactly thirty short sentences on thirty lines with correct punctuation and no commas.
+P167,deepseek-v4-flash,6,0,Starts with a real biological fact but misleadingly equates normal physiology with heart failure.
+P167,glm-5.3,10,1,Provides an accurate unusual fact with a funny explanation.
+P167,ornith-1.0-35b,9,1,Funny and broadly accurate; describing sea cucumbers as floating is slightly misleading.
+P168,deepseek-v4-flash,7,0,Explains complementary maturity well but introduces unsupported timelines and simplistic claims about increasing data.
+P168,glm-5.3,5,0,"Relevant conceptual framework but unsupported ROI percentages, timelines, and guaranteed exponential returns undermine reliability."
+P168,ornith-1.0-35b,5,0,Useful milestone mapping undermined by unsupported precise deployment lags and overstated empirical certainty.
+P169,deepseek-v4-flash,8,0,Correct concise explanation but attributes broader Mountain Course fatality totals to the TT.
+P169,glm-5.3,8,0,Correct identification and hazards; conflates TT fatalities with totals across multiple Mountain Course events.
+P169,ornith-1.0-35b,6,0,Correct race but incorrect founding year and exaggerated claims about speed and fatalities.
+P170,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P170,glm-5.3,8,0,Answers correctly with practical examples but overstates universal building requirements.
+P170,ornith-1.0-35b,7,0,Correct overall conclusion but makes sweeping unsupported legal and psychological claims.
+P171,deepseek-v4-flash,9,1,Accurately distinguishes demonstrated forward time dilation from speculative backward travel; some conclusions are overstated.
+P171,glm-5.3,8,0,Mostly accurate explanation; the unattended party is weak evidence and some objections lack precision.
+P171,ornith-1.0-35b,7,0,Good core distinction but conflates wormhole types and overstates several speculative physics claims.
+P172,deepseek-v4-flash,9,1,Correctly explains the intentional ambiguity but omits the Oregon inspiration.
+P172,glm-5.3,10,1,Clearly distinguishes the deliberately unspecified fictional state from its Oregon inspiration.
+P172,ornith-1.0-35b,8,0,Correct central answer but incorrectly calls Springfield Groening's hometown; he grew up in Portland.
+P173,deepseek-v4-flash,8,0,"Covers major transition experiences, but includes questionable shortcut claims and overly absolute compatibility statements."
+P173,glm-5.3,9,1,"Thoroughly explains adjustment, collaboration benefits, compatibility issues, and limitations; adaptation timeline is unsupported."
+P173,ornith-1.0-35b,5,0,"Useful overview undermined by incorrect shortcuts, nonexistent import options, misleading pricing, and unsupported timelines."
+P174,deepseek-v4-flash,10,1,"Correctly distinguishes 22 homologous autosomal pairs, female XX, and partially homologous male XY."
+P174,glm-5.3,8,0,"Correct overall explanation, but opening excludes homologous XX and overstates differences outside pseudoautosomal regions."
+P174,ornith-1.0-35b,9,1,Accurately explains chromosome pairs and XY exception; evolutionary discussion is unnecessary.
+P175,deepseek-v4-flash,8,0,Covers placement and acoustics well; exaggerates DAC benefits and power filtering effectiveness.
+P175,glm-5.3,10,1,"Clearly covers equipment, speaker placement, listening position, room geometry, furnishings, and acoustic interactions."
+P175,ornith-1.0-35b,6,0,"Comprehensive but includes unsupported percentages, exaggerated DAC benefits, and misleading claims about correcting bass cancellation."
+P176,deepseek-v4-flash,9,1,Provides five suitable attractions; loosely describes Bhaktapur Durbar Square as an entire city.
+P176,glm-5.3,9,1,Lists five appropriate attractions with useful descriptions; Lumbini's modern monasteries are inaccurately described as ancient.
+P176,ornith-1.0-35b,7,0,Names suitable attractions but misleadingly associates Sarangkot with Everest and Kala Patthar with day trips.
+P177,deepseek-v4-flash,10,1,"Directly and correctly identifies Kent, Connecticut."
+P177,glm-5.3,10,1,"Correctly identifies birthplace and upbringing, with accurate educational and career context."
+P177,ornith-1.0-35b,6,0,"Correct birthplace, but falsely states he was raised in Providence."
+P178,deepseek-v4-flash,8,0,"Provides legitimate research-based traits and useful archetypes, but omits the reference's specific five-type framework."
+P178,glm-5.3,7,0,"Useful archetypes and research context, but does not supply the reference's five personality types."
+P178,ornith-1.0-35b,6,0,Offers plausible descriptions but presents an informal seven-category list as professionally recognized.
+P179,deepseek-v4-flash,9,1,Clear and practical five-part framework; necessary entailment is too strict for inductive arguments.
+P179,glm-5.3,9,1,Five useful principles with clear explanations; does not distinguish deductive validity from inductive strength.
+P179,ornith-1.0-35b,9,1,Explains five strong evaluation principles; some claims about assumptions and repairing flawed arguments are overstated.
+P181,deepseek-v4-flash,10,1,"Five identifiable artworks paired with engaging, practical activities and clear educational connections."
+P181,glm-5.3,8,0,Creative and specific activities; some mechanics are unclear and Kandinsky's synesthesia is presented too definitively.
+P181,ornith-1.0-35b,6,0,"Five imaginative concepts, but several depend on implausible material behavior or unexplained physical mechanisms."
+P182,deepseek-v4-flash,7,0,"Explains the fallacy and five scenarios, but economic examples rely on unsupported causal generalizations."
+P182,glm-5.3,8,0,Clear explanation and five relevant scenarios; numerical claims lack context and test accuracy is underspecified.
+P182,ornith-1.0-35b,7,0,"Detailed explanation and five scenarios, but manufacturing claims conflate causal attribution with base-rate neglect."
+P183,deepseek-v4-flash,9,1,Clearly explains major methods; treats Socratic ignorance and Sophistic relativism somewhat categorically.
+P183,glm-5.3,9,1,Accurately covers central methods; familiar quotations and descriptions of Sophists are somewhat oversimplified.
+P183,ornith-1.0-35b,7,0,"Strong coverage, but misattributes the ignorance dictum to Delphi and overgeneralizes Sophistic beliefs."
+P184,deepseek-v4-flash,10,1,"Accurate balanced equation, reaction classification, mechanism, and observable signs."
+P184,glm-5.3,9,1,Correct equation and explanation; extinguishing a splint alone does not confirm carbon dioxide.
+P184,ornith-1.0-35b,9,1,Correct and complete; complete dissolution assumes sufficient acid.
+P185,deepseek-v4-flash,8,0,Useful coverage; incorrectly labels falling GDP and inflation a negative correlation.
+P185,glm-5.3,9,1,"Clearly explains relationships, policy transmission, expectations, and supply shocks, with minor generalizations."
+P185,ornith-1.0-35b,8,0,Strong overview; opposing fiscal policy does not necessarily eliminate central bank inflation control.
+P186,deepseek-v4-flash,9,1,Accurate core concepts and examples; misleadingly implies learning replaces human-written algorithms entirely.
+P186,glm-5.3,9,1,Clear distinctions and relevant examples; some deployment claims are overly broad.
+P186,ornith-1.0-35b,8,0,Comprehensive explanation; mischaracterizes AlphaGo's initial knowledge and overgeneralizes feedback and data efficiency.
+P187,deepseek-v4-flash,9,1,Clear explanation with correct examples and nonfactorization criterion; measurement basis remains implicit.
+P187,glm-5.3,7,0,"Useful equations, but conflates multipartite superposition with entanglement and overstates instantaneous collapse."
+P187,ornith-1.0-35b,5,0,"Misleading coin analogies, all-states claims, and instantaneous influence obscure essential quantum distinctions."
+P188,deepseek-v4-flash,8,0,Strong site-specific seismic framework; structural preferences and redundancy claims need greater qualification.
+P188,glm-5.3,6,0,Useful seismic principles; unjustifiably favors cable-stayed construction for an ambiguous 1.8-kilometer crossing.
+P188,ornith-1.0-35b,4,0,"Prematurely selects suspension; questionable isolation placement, material restrictions, and construction methods undermine reliability."
+P189,deepseek-v4-flash,6,0,"Useful descriptions, but award claims are unreliable, including Man on Wire's BAFTA category."
+P189,glm-5.3,10,1,Five appropriate award-winning documentaries with accurate backgrounds and useful filmmaking lessons.
+P189,ornith-1.0-35b,4,0,"Relevant selections, but numerous factual errors include an invented Honeyland Oscar win."
+P191,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P191,glm-5.3,6,0,"Reasonable baseline; missing NumPy import breaks code, and proposed instruments lack exclusion justification."
+P191,ornith-1.0-35b,3,0,"Code fails on undefined variables; incorrect dynamics, forecast leakage, and misleading production-readiness claims."
+P192,deepseek-v4-flash,7,0,Preserves meaning but translates into Swedish rather than reformulating the supplied English.
+P192,glm-5.3,10,1,"Faithful, fluent English reformulations correct grammar while preserving the original evaluation."
+P192,ornith-1.0-35b,9,1,"Polished English alternatives preserve the main meaning, with some unnecessary embellishment."
+P193,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P193,glm-5.3,7,0,"Professional HTML structure, but invents platform capabilities, verification details, and completion assurances."
+P193,ornith-1.0-35b,5,0,"Polished HTML, but extensively fabricates payment tools, reviews, screening procedures, and support capabilities."
+P194,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P194,glm-5.3,7,0,Useful trade sequence; omits planning approvals and overgeneralizes vapor barriers and utility activation.
+P194,ornith-1.0-35b,5,0,"Extensive coverage undermined by contradictory sequencing, late windows, structural errors, and omitted planning approvals."
+P195,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P195,glm-5.3,5,0,"Useful progression, but schedules seven training days, inconsistent recovery weeks, and excessive hard running."
+P195,ornith-1.0-35b,2,0,"Dangerous swim-walk advice, unrealistic beginner progression, contradictory timelines, and no actual rest day."
+P196,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P196,glm-5.3,4,0,"Useful overview, but multiple legislative inaccuracies, insufficient article length, and missing top-three article synthesis."
+P196,ornith-1.0-35b,2,0,Extensive fabricated legislation and unreliable references undermine the article; requested research is not demonstrated.
+P197,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P197,glm-5.3,8,0,"Strong segmentation, positioning, pricing, and phased execution; unsupported market claims and incomplete competitive analysis."
+P197,ornith-1.0-35b,7,0,"Comprehensive strategy, but inaccurate standards terminology, unrealistic performance promises, and oversimplified regulatory planning."
+P198,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P198,glm-5.3,8,0,"Comprehensive explanation with integrated examples; some historical inaccuracies, unsupported claims, and oversimplified corporate interpretations."
+P198,ornith-1.0-35b,6,0,"Explains STP thoroughly, but erroneous historical attribution and questionable academic references undermine scholarly credibility."
+P199,deepseek-v4-flash,1,0,auto: no answer (timeout)
+P199,glm-5.3,8,0,Practical scope with responsibilities and service standards; waste classifications and contamination tolerances need correction.
+P199,ornith-1.0-35b,6,0,"Detailed scope, but problematic disposal guidance, pharmaceutical classifications, and liability assumptions require substantial correction."
+P200,deepseek-v4-flash,9,1,"Clear workshop progression, practical exercises, assigned outputs, and measurement; long sessions omit scheduled breaks."
+P200,glm-5.3,8,0,Coherent workshop sequence with useful activities and deliverables; every agenda exceeds its stated duration.
+P200,ornith-1.0-35b,9,1,"Complete, actionable series with realistic agendas, inclusive facilitation, ownership, measurement, and launch contingency planning."

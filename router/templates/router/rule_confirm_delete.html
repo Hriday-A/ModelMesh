@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Delete rule{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Delete this rule?</h1>
+  <p><strong>{{ object.get_category_display }}</strong>: {{ object.keywords }} → {{ object.preferred_model }}</p>
+  <p class="muted">Ratings already given stay saved. This can't be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="filter-actions">
+      <button type="submit" class="button danger">Delete rule</button>
+      <a class="button secondary" href="{% url 'router:rules' %}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

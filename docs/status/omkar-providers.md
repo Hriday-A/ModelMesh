@@ -1,6 +1,6 @@
 # providers: Omkar Chougule
 
-- **Status:** built and tested on `feature/providers`, ready for a pull request
+- **Status:** merged into `main` (PR #3)
 - **Branch:** `feature/providers`
 - **Wireframe screens:** 9 (Providers & Health), 10 (Add / Edit Provider)
 - **Last updated:** 2026-11-08
@@ -17,7 +17,7 @@
 - [x] Moved `anthropic_completion()` into `providers/services.py`. `accounts.services.estimate_cost()` now uses the model's own prices from `AIModel`. Models that aren't registered fall back to the `MODELMESH_*_PRICE` settings.
 - [x] Added the app to `INSTALLED_APPS`, a "Providers" link to `MODELMESH_NAV`, and its URLs to `modelmesh/urls.py`.
 - [x] 19 tests in `providers/tests.py`.
-- [ ] Open the pull request to `main`.
+- [x] Open the pull request to `main`. Merged as PR #3.
 
 ## How health works
 
@@ -26,7 +26,7 @@
 ## Submission piece: roadmap table (Requirement 4, 15 pts)
 
 - [x] `docs/roadmap.md` with Task, Current Status, Responsible Member and Expected Completion for all six rows.
-- [ ] On 2026-11-09, after the `providers` and `router` PRs merge, change "On branch" to "Merged".
+- [x] After the `providers` and `router` PRs merged, change "On branch" to "Merged" (done 2026-11-09).
 
 ## Notes for teammates
 

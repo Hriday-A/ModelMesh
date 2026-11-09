@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Why this model? · Request #{{ log.pk }}{% endblock %}
+{% block content %}
+<p><a href="{% url 'router:requests' %}">← Back to my routed requests</a></p>
+
+<div class="grid two">
+  <section class="card">
+    {% if decision %}
+      {% if decision.chosen_model %}
+        <h1>Why {{ decision.chosen_model.name }} was chosen</h1>
+      {% else %}
+        <h1>No model could answer</h1>
+      {% endif %}
+      <p>Detected category: <strong>{{ decision.get_category_display }}</strong> · Priority: <strong>{{ log.get_priority_display }}</strong> · Decided by: <strong>{{ decision.get_classifier_used_display }}</strong>{% if decision.rule %} · Rule: <strong>{{ decision.rule.keywords }}</strong>{% endif %}</p>
+      {% include "router/_score_table.html" with rows=rows %}
+      {% if decision.chosen_model %}
+        <p>Cost <strong>{{ decision.cost_usd|floatformat:6 }} coins</strong> · Saved <strong>{{ decision.saved_usd|floatformat:6 }} coins</strong> vs. sending the same tokens to the most expensive model.</p>
+      {% endif %}
+      {% if decision.fallback_used %}
+        <h2>Failover</h2>
+        <ul>
+          {% for attempt in decision.attempts %}
+            <li><code>{{ attempt.model_id }}</code>: {% if attempt.error %}failed ({{ attempt.error }}){% else %}answered{% endif %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% else %}
+      <h1>Request #{{ log.pk }}</h1>
+      <p>This request was not handled by the smart router, so there is no explanation.</p>
+    {% endif %}
+    <details>
+      <summary>Prompt and answer</summary>
+      <h2>Prompt</h2>
+      <div class="response-text">{{ log.prompt|linebreaks }}</div>
+      <h2>{% if log.status == "error" %}Error{% else %}Answer{% endif %}</h2>
+      <div class="response-text">{% if log.status == "error" %}{{ log.error_message }}{% else %}{{ log.response|linebreaks }}{% endif %}</div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Was this answer good?</h2>
+    {% if log.status == "error" %}
+      <p class="muted">Failed requests can't be rated.</p>
+    {% else %}
+      {% if feedback %}<p class="message success">You rated this {{ feedback.stars }} ★. You can change your rating.</p>{% endif %}
+      <form method="post" class="feedback-form">
+        {% csrf_token %}
+        {% include "form_fields.html" with form=form %}
+        <button type="submit" class="button">Send feedback</button>
+      </form>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -26,6 +26,7 @@
           <div><dt>Cost</dt><dd>${{ result.cost_usd|floatformat:6 }}</dd></div>
         </dl>
         {% if result.routing_reason %}<p class="muted"><strong>Why this model?</strong> {{ result.routing_reason }}</p>{% endif %}
+        {% if result.routing_decision %}<p><a href="{% url 'router:explain' result.pk %}">{% if result.status == 'error' %}See how the router tried each model{% else %}Explain &amp; rate this answer{% endif %} →</a></p>{% endif %}
       </div>
     {% endif %}
   </section>

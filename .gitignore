@@ -4,7 +4,8 @@ __pycache__/
 db.sqlite3
 .env
 
-# Model weights
+# Model weights and caches (the router's small router.joblib is committed on purpose)
 *.bin
 *.safetensors
 *.pt
+*.npy
